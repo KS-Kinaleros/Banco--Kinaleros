@@ -46,8 +46,13 @@ exports.createUser = async (req, res) => {
         let account = Math.floor(Math.random() * (9999999999 - 1000000000) + 1000000000)
         data.noAccount = account
 
+        //validar que no cree la cuenta si el dinero es menor a 100
+        if ( data.monthlyIncome < 100) return res.status(400).send({ message: "No se puede crear la cuenta con menos de Q100" })
+
         data.role = 'CLIENT'
         data.password = await encrypt(data.password)
+
+
         let user = new User(data)
         await user.save()
         return res.send({ message: "Cuentra creada exitosamente" })
