@@ -8,6 +8,29 @@ exports.test = async (req, res) => {
     res.send({ message: 'test user controller' })
 }
 
+exports.admindef = async (req, res) => {
+    try {
+        let data = {
+            name: "Admin",
+            username: "admin",
+            DPI: "1234567891012",
+            phone: "12345678",
+            email: "admin@",
+            password: "admin",
+            role: "admin"
+        }
+        data.password = await encrypt(data.password)
+        let existUser = await User.findOne({name: "Admin"})
+        if(existUser) return console.log("Administrador por default ya ha sido creado")
+        let defUser = new User(data)
+        await defUser.save()
+        return console.log("Administrador creado correctamente")
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+
 exports.loginUser = async (req, res) => {
     try {
         //obtener data
