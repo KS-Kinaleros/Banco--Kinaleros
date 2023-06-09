@@ -7,6 +7,7 @@ const cors = require('cors')
 // rutas
 const userRoutes = require('../src/user/user.routes')
 const favoriteRoutes = require('../src/favorite/favorite.routes')
+const productRoutes = require('../src/product/product.routes')
 
 const app = express()
 const port = process.env.PORT || 3100
@@ -19,6 +20,7 @@ app.use(morgan('dev'))
 //para usar las rutas
 app.use('/user', userRoutes )
 app.use('/favorite', favoriteRoutes )
+app.use('/product', productRoutes )
 
 exports.initServer = () =>{
     app.listen(port)
