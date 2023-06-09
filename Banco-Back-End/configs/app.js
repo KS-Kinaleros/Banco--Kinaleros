@@ -6,6 +6,7 @@ const helmet = require('helmet')
 const cors = require('cors')
 // rutas
 const userRoutes = require('../src/user/user.routes')
+const favoriteRoutes = require('../src/favorite/favorite.routes')
 
 const app = express()
 const port = process.env.PORT || 3100
@@ -17,6 +18,7 @@ app.use(helmet())
 app.use(morgan('dev'))
 //para usar las rutas
 app.use('/user', userRoutes )
+app.use('/favorite', favoriteRoutes )
 
 exports.initServer = () =>{
     app.listen(port)
