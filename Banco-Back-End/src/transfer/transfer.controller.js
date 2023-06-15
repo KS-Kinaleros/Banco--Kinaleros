@@ -24,7 +24,15 @@ exports.save = async (req, res) => {
         let receiver = await User.findOne({ noAccount: data.noAccount })
         if (receiver._id != data.receiver) return res.status(400).send({ message: "El numero de cuenta no coincide con el nombre" })
 
-        //quitar el dinero de la cuenta del remitente
+        await User.findOneAndUpdate({ _id: sender._id }, {
+            $inc: { money: Number(data.amount) * -1 }
+        }, { new: true });
+
+        await User.findOneAndUpdate({ _id: receiver._id }, {
+            $inc: { money: Number(data.amount) }
+        }, { new: true });
+
+        /* //quitar el dinero de la cuenta del remitente
         sender.money = sender.money - data.amount
         console.log(sender.money)
         await sender.save()
@@ -32,7 +40,7 @@ exports.save = async (req, res) => {
         //agregar el dinero a la cuenta del destinatario
         receiver.money = receiver.money + data.amount
         console.log(receiver.money)
-        await receiver.save()
+        await receiver.save() */
 
         //guardar transferencia
         let transfer = new Transfer(data)
@@ -42,6 +50,8 @@ exports.save = async (req, res) => {
         console.error(err)
     }
 }
+
+//100 + 5 1005
 
 exports.update = async (req, res) => {
     try {
@@ -57,14 +67,23 @@ exports.update = async (req, res) => {
         let sender = await User.findOne({ _id: transfer.sender })
         let receiver = await User.findOne({ _id: transfer.receiver })
 
-        //cambiar la cantidad que se sumo a la cuenta del remitente
-        sender.money = ((sender.money + transfer.amount) - data.amount)
+        //cambiar la cantidad del sender
+        await User.findOneAndUpdate({ _id: sender._id }, {
+            $inc: { money: Number(transfer.amount) - Number(data.amount)}
+        }, { new: true });
+
+        //cambiar la cantida del receiver
+        await User.findOneAndUpdate({ _id: receiver._id }, {
+            $inc: { money: Number(data.amount)}
+        }, { new: true });
+
+/*      sender.money = ((sender.money + transfer.amount) - data.amount)
         await sender.save()
         console.log(sender.money)
         //cambiar la cantidad que se quito a la cuenta del destinatario
         receiver.money = ((receiver.money - transfer.amount) + data.amount)
         await receiver.save()
-        console.log(receiver.money)
+        console.log(receiver.money) */
 
         //actualizar la transferencia
         let updateTransfer = await Transfer.findOneAndUpdate(
@@ -72,8 +91,8 @@ exports.update = async (req, res) => {
             data,
             { new: true }
         )
-        if(!updateTransfer) return res.status(400).send({message: "No se realizo la actualizacion de la transferencia"})
-        return res.send({message: "Actualizacion de transferencia realizada con exito"})
+        if (!updateTransfer) return res.status(400).send({ message: "No se realizo la actualizacion de la transferencia" })
+        return res.send({ message: "Actualizacion de transferencia realizada con exito" })
     } catch (err) {
         console.error(err)
     }

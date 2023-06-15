@@ -75,6 +75,7 @@ exports.createUser = async (req, res) => {
         data.role = 'CLIENT'
         data.password = await encrypt(data.password)
 
+        data.money = data.monthlyIncome
 
         let user = new User(data)
         await user.save()
