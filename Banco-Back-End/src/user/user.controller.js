@@ -17,7 +17,7 @@ exports.admindef = async (req, res) => {
             phone: "12345678",
             email: "admin@",
             password: "admin",
-            role: "admin"
+            role: "ADMIN"
         }
         data.password = await encrypt(data.password)
         let existUser = await User.findOne({name: "Admin"})
@@ -45,8 +45,13 @@ exports.loginUser = async (req, res) => {
         let user = await User.findOne({ username: data.username })
         //validar la contraseña
         if (user && await checkPassword(data.password, user.password)) {
+            let userLogged = {
+                name: user.name,
+                username: user.username,
+                role: user.role
+            }
             let token = await createToken(user)
-            return res.send({ message: "user logged satisfactoriamente", token })
+            return res.send({ message: "user logged satisfactoriamente", token, userLogged })
         }
         return res.status(400).send({ message: "invalid credentials" })
     } catch (err) {

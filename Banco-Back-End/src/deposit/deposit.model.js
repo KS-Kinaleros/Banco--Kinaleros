@@ -16,8 +16,8 @@ const DepositSchema = mongoose.Schema({
         required: true
     },
     nameAccount:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        type: String,
+        required: true
     },
     amount:{
         type: Number,

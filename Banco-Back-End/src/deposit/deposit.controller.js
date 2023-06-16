@@ -13,19 +13,22 @@ exports.save = async (req, res) => {
         let data = req.body
         //obtener token del trabajor
         let token = req.user.sub
-        //verificar si la cuenta existe
+        //verificar si la cuenta existe validando el numero de cuenta y el nombre del usuario
         let userexist = await User.findOne({ noAccount: data.noAccount })
-        if (!userexist) return res.status(404).send({ message: 'Cuenta no encontrada' })
-        //verificar si el usuario es trabajador
+        if( userexist.name != data.nameAccount ) return res.status(404).send({ message: 'El nombre no coincide con el número de cuenta' })
+        /* if (!userexist) return res.status(404).send({ message: 'Cuenta no encontrada' }) */
+
+        //verificar si el usuario es trabajador que hara el deposito
         let worker = await User.findOne({ _id: token })
         if (worker.role != 'ADMIN') return res.status(404).send({ message: 'No tienes permisos para realizar esta accion' })
 
         data.worker = token
 
         //agregar la cantidad de dinero a la cuenta
-        userexist.money = userexist.money + data.amount
-        console.log(userexist.money)
-        await userexist.save()
+        await User.findOneAndUpdate({ _id: userexist._id }, {
+            $inc: { money: Number(data.amount) }
+        }, { new: true })
+
 
         //guardar el deposito
         let deposit = new Deposit(data)
@@ -49,7 +52,7 @@ exports.update = async (req, res) => {
 
         //validar que si exista el usuario
         let user = await User.findOne({ _id: depositExist.nameAccount })
-        
+
         //cambiar la cantidad de dinero en la cuenta
         user.money = ((user.money - depositExist.amount) + data.amount)
         await user.save()
@@ -60,8 +63,8 @@ exports.update = async (req, res) => {
             data,
             { new: true }
         )
-        if(!updateDeposit) return res.status(404).send({message: 'Error al actualizar el deposito'})    
-        return res.status(200).send({message: 'Deposito actualizado exitosamente'})
+        if (!updateDeposit) return res.status(404).send({ message: 'Error al actualizar el deposito' })
+        return res.status(200).send({ message: 'Deposito actualizado exitosamente' })
     } catch (err) {
         console.error(err)
     }
@@ -78,14 +81,14 @@ exports.cancel = async (req, res) => {
 
         //quitar la cantidad de dinero de la cuente del receptor
         let user = await User.findOne({ _id: depositExist.nameAccount })
-        if(!user) return res.status(404).send({message: 'Usuario no encontrado'})
+        if (!user) return res.status(404).send({ message: 'Usuario no encontrado' })
 
         user.money = user.money - depositExist.amount
         await user.save()
 
         //eliminar el deposito
         let deleteDeposit = await Deposit.findOneAndDelete({ _id: depositId })
-        if (!deleteDeposit) return res.status(404).send({ message: 'Error al cancelar el deposito' })   
+        if (!deleteDeposit) return res.status(404).send({ message: 'Error al cancelar el deposito' })
         return res.status(200).send({ message: 'Deposito cancelado exitosamente' })
     } catch (err) {
         console.error(err)
@@ -95,7 +98,7 @@ exports.cancel = async (req, res) => {
 exports.get = async (req, res) => {
     try {
         let deposit = await Deposit.findOne()
-        res.send({message:'Depositos encontrados', deposit})
+        res.send({ message: 'Depositos encontrados', deposit })
     } catch (err) {
         console.error(err)
     }
