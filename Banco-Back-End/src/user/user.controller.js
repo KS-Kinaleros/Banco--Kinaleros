@@ -8,6 +8,29 @@ exports.test = async (req, res) => {
     res.send({ message: 'test user controller' })
 }
 
+exports.admindef = async (req, res) => {
+    try {
+        let data = {
+            name: "Admin",
+            username: "admin",
+            DPI: "1234567891012",
+            phone: "12345678",
+            email: "admin@",
+            password: "admin",
+            role: "ADMIN"
+        }
+        data.password = await encrypt(data.password)
+        let existUser = await User.findOne({name: "Admin"})
+        if(existUser) return console.log("Administrador por default ya ha sido creado")
+        let defUser = new User(data)
+        await defUser.save()
+        return console.log("Administrador creado correctamente")
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+
 exports.loginUser = async (req, res) => {
     try {
         //obtener data
@@ -22,8 +45,13 @@ exports.loginUser = async (req, res) => {
         let user = await User.findOne({ username: data.username })
         //validar la contraseña
         if (user && await checkPassword(data.password, user.password)) {
+            let userLogged = {
+                name: user.name,
+                username: user.username,
+                role: user.role
+            }
             let token = await createToken(user)
-            return res.send({ message: "user logged satisfactoriamente", token })
+            return res.send({ message: "user logged satisfactoriamente", token, userLogged })
         }
         return res.status(400).send({ message: "invalid credentials" })
     } catch (err) {
@@ -52,6 +80,7 @@ exports.createUser = async (req, res) => {
         data.role = 'CLIENT'
         data.password = await encrypt(data.password)
 
+        data.money = data.monthlyIncome
 
         let user = new User(data)
         await user.save()

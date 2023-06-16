@@ -21,7 +21,6 @@ const userSchema = mongoose.Schema({
     },
     address: {
         type: String,
-        required: true
     },
     phone: {
         type: String,
@@ -37,11 +36,12 @@ const userSchema = mongoose.Schema({
     },
     job: {
         type: String,
-        required: true
     },
     monthlyIncome: {
         type: Number,
-        required: true
+    },
+    money:{
+        type: Number
     },
     role:{
         type: String,

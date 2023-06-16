@@ -1,0 +1,651 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Banco - Kinaleros",
+    "dateExported": "2023-06-09T10:08:35.173Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "48a90ffa-37cc-4e86-a446-cbd46219beab",
+            "name": "user",
+            "containerId": "",
+            "created": "2023-06-02T09:11:47.712Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "a165e1d2-1b88-4334-820b-2a65bb66fcdd",
+            "name": "product",
+            "containerId": "",
+            "created": "2023-06-02T09:11:52.103Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "22c4c4af-7e99-4714-ac78-48500deb32c1",
+            "name": "transfer",
+            "containerId": "",
+            "created": "2023-06-09T05:21:06.255Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "383c6229-b73e-4b2d-b686-c5b3be601fea",
+            "name": "favoritos",
+            "containerId": "",
+            "created": "2023-06-09T08:19:31.974Z",
+            "sortNum": 40000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "9d85dec5-b32e-43a2-99dc-20a070a61a71",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "a165e1d2-1b88-4334-820b-2a65bb66fcdd",
+            "name": "test",
+            "url": "product/test",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-06-02T09:11:55.978Z",
+            "modified": "2023-06-02T09:13:03.797Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "81c79a8b-723e-4c00-b090-3a2bc3e66f84",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "48a90ffa-37cc-4e86-a446-cbd46219beab",
+            "name": "test",
+            "url": "user/test",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-06-02T09:12:02.962Z",
+            "modified": "2023-06-02T09:12:54.445Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "3b1778bd-0f96-458f-b10d-87f658deece4",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "a165e1d2-1b88-4334-820b-2a65bb66fcdd",
+            "name": "add",
+            "url": "product/add",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-06-09T03:32:48.530Z",
+            "modified": "2023-06-09T03:36:04.311Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "Hamburguesa"
+                    },
+                    {
+                        "name": "description",
+                        "value": "Solo con la tarjeta gold"
+                    },
+                    {
+                        "name": "price",
+                        "value": "11"
+                    },
+                    {
+                        "name": "availability",
+                        "value": "disponible"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "0ec9cc9e-6462-4cda-a6bf-26c3ca7ff595",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "a165e1d2-1b88-4334-820b-2a65bb66fcdd",
+            "name": "update",
+            "url": "product/update/6482b085cae637a0c9840455",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2023-06-09T03:32:54.072Z",
+            "modified": "2023-06-09T04:54:47.596Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "Burgerrrr"
+                    },
+                    {
+                        "name": "price",
+                        "value": "3333"
+                    },
+                    {
+                        "name": "availability",
+                        "value": "expirado"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "37a28020-f1c4-4bdb-9749-bb0d1333cdeb",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "a165e1d2-1b88-4334-820b-2a65bb66fcdd",
+            "name": "delete",
+            "url": "product/delete/6482b085cae637a0c9840455",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2023-06-09T03:32:58.609Z",
+            "modified": "2023-06-09T04:54:59.573Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "b66aca48-cf01-4616-b371-60989a14cca9",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "a165e1d2-1b88-4334-820b-2a65bb66fcdd",
+            "name": "get",
+            "url": "product/get",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2023-06-09T03:33:02.821Z",
+            "modified": "2023-06-09T03:36:29.351Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "526a9bcd-d2d3-4218-8076-02c15f065979",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "22c4c4af-7e99-4714-ac78-48500deb32c1",
+            "name": "test",
+            "url": "transfer/test",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2023-06-09T05:21:10.544Z",
+            "modified": "2023-06-09T05:22:56.368Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "a11c70ae-ec76-48ce-bed7-8dce7e664df5",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "48a90ffa-37cc-4e86-a446-cbd46219beab",
+            "name": "add",
+            "url": "user/add",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2023-06-09T05:30:16.918Z",
+            "modified": "2023-06-09T05:43:51.165Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "Carlos"
+                    },
+                    {
+                        "name": "username",
+                        "value": "carlos23"
+                    },
+                    {
+                        "name": "DPI",
+                        "value": "3333"
+                    },
+                    {
+                        "name": "address",
+                        "value": "zona 3"
+                    },
+                    {
+                        "name": "phone",
+                        "value": "333"
+                    },
+                    {
+                        "name": "email",
+                        "value": "caguifeva@"
+                    },
+                    {
+                        "name": "password",
+                        "value": "123"
+                    },
+                    {
+                        "name": "job",
+                        "value": "abogado"
+                    },
+                    {
+                        "name": "monthlyIncome",
+                        "value": "100"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "67fd7bb7-d0d5-4842-81d5-9c2ebfa8ecdd",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "383c6229-b73e-4b2d-b686-c5b3be601fea",
+            "name": "test",
+            "url": "favorite/test",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2023-06-09T08:19:40.356Z",
+            "modified": "2023-06-09T09:54:41.460Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "5db71fd5-6e02-4a7a-8e80-8ff8bb845068",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "48a90ffa-37cc-4e86-a446-cbd46219beab",
+            "name": "add 2",
+            "url": "user/add",
+            "method": "POST",
+            "sortNum": 85000,
+            "created": "2023-06-09T05:43:08.158Z",
+            "modified": "2023-06-09T05:43:08.158Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "josue"
+                    },
+                    {
+                        "name": "username",
+                        "value": "josue2"
+                    },
+                    {
+                        "name": "DPI",
+                        "value": "123"
+                    },
+                    {
+                        "name": "address",
+                        "value": "zona 15"
+                    },
+                    {
+                        "name": "phone",
+                        "value": "123"
+                    },
+                    {
+                        "name": "email",
+                        "value": "mrpollo@"
+                    },
+                    {
+                        "name": "password",
+                        "value": "123"
+                    },
+                    {
+                        "name": "job",
+                        "value": "Call center"
+                    },
+                    {
+                        "name": "monthlyIncome",
+                        "value": "100"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "f610941d-5108-40ad-9b12-b8ea92e28ccb",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "48a90ffa-37cc-4e86-a446-cbd46219beab",
+            "name": "delete",
+            "url": "user/delete/648162e7c96d5c0282eb4b8f",
+            "method": "DELETE",
+            "sortNum": 90000,
+            "created": "2023-06-09T05:30:41.580Z",
+            "modified": "2023-06-09T05:33:21.514Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "a8f7aae9-43fd-407e-abb6-31750e9e7f7e",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "48a90ffa-37cc-4e86-a446-cbd46219beab",
+            "name": "update",
+            "url": "user/update/648162e7c96d5c0282eb4b8f",
+            "method": "PUT",
+            "sortNum": 100000,
+            "created": "2023-06-09T05:30:55.147Z",
+            "modified": "2023-06-09T05:33:22.468Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "Fabian"
+                    },
+                    {
+                        "name": "addres",
+                        "value": "Zona 3",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "DPI",
+                        "value": "12333",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "password",
+                        "value": "2222",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "role",
+                        "value": "admin",
+                        "isDisabled": true
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "c44b6269-042b-4740-b289-d2fad33c280a",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "48a90ffa-37cc-4e86-a446-cbd46219beab",
+            "name": "get users",
+            "url": "user/get",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2023-06-09T05:31:20.554Z",
+            "modified": "2023-06-09T05:33:23.316Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "b14310a5-3469-4957-933d-ce2f9c95fd6f",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "48a90ffa-37cc-4e86-a446-cbd46219beab",
+            "name": "login",
+            "url": "user/login",
+            "method": "POST",
+            "sortNum": 120000,
+            "created": "2023-06-09T05:37:01.521Z",
+            "modified": "2023-06-09T05:38:08.024Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "username",
+                        "value": "josue2"
+                    },
+                    {
+                        "name": "password",
+                        "value": "123"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "3f921244-d0ce-496d-b7ec-06679efbd1ff",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "22c4c4af-7e99-4714-ac78-48500deb32c1",
+            "name": "save",
+            "url": "transfer/save",
+            "method": "POST",
+            "sortNum": 130000,
+            "created": "2023-06-09T05:47:51.610Z",
+            "modified": "2023-06-09T06:44:22.004Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDgyYzg4ZjBhNzZiNGVhMWZhMWQ5MzMiLCJuYW1lIjoiam9zdWUiLCJ1c2VybmFtZSI6Impvc3VlMiIsImVtYWlsIjoibXJwb2xsb0AiLCJyb2xlIjoiQ0xJRU5UIiwiaWF0IjoxNjg2MjkyNjI2LCJleHAiOjE2ODYyOTk4MjZ9.fOD7C57O7WJvN3jhHu-2kkYYt2nPX4zKmks3f7nD9Ps\""
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "noAccount",
+                        "value": "4015729563"
+                    },
+                    {
+                        "name": "receiver",
+                        "value": "6482c88c0a76b4ea1fa1d931"
+                    },
+                    {
+                        "name": "amount",
+                        "value": "33"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "10a52fe9-43f5-497f-bc4d-5a15ea4bd325",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "48a90ffa-37cc-4e86-a446-cbd46219beab",
+            "name": "login 2",
+            "url": "user/login",
+            "method": "POST",
+            "sortNum": 130000,
+            "created": "2023-06-09T08:40:07.730Z",
+            "modified": "2023-06-09T08:40:24.389Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "username",
+                        "value": "carlos23"
+                    },
+                    {
+                        "name": "password",
+                        "value": "123"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "cf670474-c74f-4735-a045-4669e10326e5",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "22c4c4af-7e99-4714-ac78-48500deb32c1",
+            "name": "update",
+            "url": "transfer/update/6482d32d11d2a0e0954840c0",
+            "method": "PUT",
+            "sortNum": 135000,
+            "created": "2023-06-09T07:18:37.952Z",
+            "modified": "2023-06-09T07:23:06.341Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "amount",
+                        "value": "10"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "d309a84e-583b-4ed1-b1e7-fa531c4d3865",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "22c4c4af-7e99-4714-ac78-48500deb32c1",
+            "name": "delete",
+            "url": "transfer/cancel/6482ced0e924db174c232e2c",
+            "method": "DELETE",
+            "sortNum": 140000,
+            "created": "2023-06-09T06:55:26.465Z",
+            "modified": "2023-06-09T07:05:39.101Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "cc3375b6-0651-4b5e-b06e-8eec188b84db",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "48a90ffa-37cc-4e86-a446-cbd46219beab",
+            "name": "login admin",
+            "url": "user/login",
+            "method": "POST",
+            "sortNum": 140000,
+            "created": "2023-06-09T09:27:03.839Z",
+            "modified": "2023-06-09T09:27:30.827Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "username",
+                        "value": "admin"
+                    },
+                    {
+                        "name": "password",
+                        "value": "admin"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "9b0f3511-f27d-4db2-a08e-55e8387d66a4",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "22c4c4af-7e99-4714-ac78-48500deb32c1",
+            "name": "get",
+            "url": "transfer/get",
+            "method": "GET",
+            "sortNum": 150000,
+            "created": "2023-06-09T06:57:00.402Z",
+            "modified": "2023-06-09T06:57:32.457Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "23d7ebe4-ed99-45f4-9458-3dc3b89a7df9",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "383c6229-b73e-4b2d-b686-c5b3be601fea",
+            "name": "save",
+            "url": "favorite/save",
+            "method": "POST",
+            "sortNum": 160000,
+            "created": "2023-06-09T08:19:37.122Z",
+            "modified": "2023-06-09T09:54:43.292Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDgyYzg4ZjBhNzZiNGVhMWZhMWQ5MzMiLCJuYW1lIjoiam9zdWUiLCJ1c2VybmFtZSI6Impvc3VlMiIsImVtYWlsIjoibXJwb2xsb0AiLCJyb2xlIjoiQ0xJRU5UIiwiaWF0IjoxNjg2Mjk4OTg0LCJleHAiOjE2ODYzMDYxODR9.qekeim5koW1ez4IOZY-M2KvmRXLUyT0F0atq0VQcA4Q\""
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "noAccount",
+                        "value": "4015729563"
+                    },
+                    {
+                        "name": "DPI",
+                        "value": "3333"
+                    },
+                    {
+                        "name": "nickname",
+                        "value": "carlitos uwu"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "0e21af7c-cdb5-4a12-984d-8ad40fcbbb59",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "383c6229-b73e-4b2d-b686-c5b3be601fea",
+            "name": "update",
+            "url": "favorite/update/6482e4518db27d9172bd5344",
+            "method": "PUT",
+            "sortNum": 180000,
+            "created": "2023-06-09T08:19:46.002Z",
+            "modified": "2023-06-09T09:54:44.147Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDgyYzg4ZjBhNzZiNGVhMWZhMWQ5MzMiLCJuYW1lIjoiam9zdWUiLCJ1c2VybmFtZSI6Impvc3VlMiIsImVtYWlsIjoibXJwb2xsb0AiLCJyb2xlIjoiQ0xJRU5UIiwiaWF0IjoxNjg2Mjk4OTg0LCJleHAiOjE2ODYzMDYxODR9.qekeim5koW1ez4IOZY-M2KvmRXLUyT0F0atq0VQcA4Q\""
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "nickname",
+                        "value": "carlitos unu"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "59792dd2-db46-40ef-8b91-6dd679b0ef33",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "383c6229-b73e-4b2d-b686-c5b3be601fea",
+            "name": "delete",
+            "url": "favorite/delete/6482e4518db27d9172bd5344",
+            "method": "DELETE",
+            "sortNum": 190000,
+            "created": "2023-06-09T08:19:49.699Z",
+            "modified": "2023-06-09T09:54:44.926Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "a0e3b369-4086-4fa7-94ce-bbc451135d71",
+            "colId": "5f66694d-327e-4940-9edb-051cf46b3690",
+            "containerId": "383c6229-b73e-4b2d-b686-c5b3be601fea",
+            "name": "get",
+            "url": "favorite/get",
+            "method": "GET",
+            "sortNum": 200000,
+            "created": "2023-06-09T08:19:53.404Z",
+            "modified": "2023-06-09T09:54:45.687Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDgyYzg4ZjBhNzZiNGVhMWZhMWQ5MzMiLCJuYW1lIjoiam9zdWUiLCJ1c2VybmFtZSI6Impvc3VlMiIsImVtYWlsIjoibXJwb2xsb0AiLCJyb2xlIjoiQ0xJRU5UIiwiaWF0IjoxNjg2Mjk4OTg0LCJleHAiOjE2ODYzMDYxODR9.qekeim5koW1ez4IOZY-M2KvmRXLUyT0F0atq0VQcA4Q\""
+                }
+            ],
+            "params": [],
+            "tests": []
+        }
+    ],
+    "settings": {
+        "options": {
+            "baseUrl": "localhost:3100/"
+        }
+    }
+}
