@@ -20,8 +20,8 @@ exports.admindef = async (req, res) => {
             role: "ADMIN"
         }
         data.password = await encrypt(data.password)
-        let existUser = await User.findOne({name: "Admin"})
-        if(existUser) return console.log("Administrador por default ya ha sido creado")
+        let existUser = await User.findOne({ name: "Admin" })
+        if (existUser) return console.log("Administrador por default ya ha sido creado")
         let defUser = new User(data)
         await defUser.save()
         return console.log("Administrador creado correctamente")
@@ -75,7 +75,7 @@ exports.createUser = async (req, res) => {
         data.noAccount = account
 
         //validar que no cree la cuenta si el dinero es menor a 100
-        if ( data.monthlyIncome < 100) return res.status(400).send({ message: "No se puede crear la cuenta con menos de Q100" })
+        if (data.monthlyIncome < 100) return res.status(400).send({ message: "No se puede crear la cuenta con menos de Q100" })
 
         data.role = 'CLIENT'
         data.password = await encrypt(data.password)
@@ -121,9 +121,9 @@ exports.deleteUser = async (req, res) => {
         //obtener id del usuario
         let userId = req.params.id
 
-        let userDelete = await User.findOneAndDelete({_id: userId})
-        if(!userDelete) return res.status(400).send({message: "Error deleting account"})
-        return res.send({message: "Account deleted successfully", userDelete})
+        let userDelete = await User.findOneAndDelete({ _id: userId })
+        if (!userDelete) return res.status(400).send({ message: "Error deleting account" })
+        return res.send({ message: "Account deleted successfully", userDelete })
     } catch (err) {
         console.error(err)
     }
@@ -131,9 +131,9 @@ exports.deleteUser = async (req, res) => {
 
 exports.getUsers = async (req, res) => {
     try {
-        //obtener usuarios
-        let users = await User.find()
-        return res.send({message: "Users obtained successfully", users})
+        //obtener usuarios solo si son rol cliente
+        let users = await User.find({ role: "CLIENT" })
+        return res.send({ message: "Users obtained successfully", users })
     } catch (err) {
         console.error(err)
     }
