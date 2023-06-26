@@ -2,6 +2,8 @@
 
 const Transfer = require('./transfer.model')
 const User = require('../user/user.model')
+const moment = require('moment')
+const { default: mongoose } = require('mongoose')
 
 exports.test = async (req, res) => {
     res.send({ message: 'Test transfer is running' })
@@ -13,12 +15,45 @@ exports.save = async (req, res) => {
         let data = req.body
         //obtener el token del usuario que hara la transferencia
         let token = req.user.sub
+        //guardar la data del remitente
+        data.sender = token
+
+        let senderExit = await User.findOne({ _id: token })
+        if (!senderExit) return res.status(400).send({ message: "El usuario no existe" })
+
+        //el usuario no puede hacer mas de 10000 en transferencias al dia
+        let horaIni = moment().startOf('day').utcOffset(-6).subtract(6, 'hour').toDate()/* .format('M/D/YYYY, h:mm A') */;
+
+        let horaFin = moment().endOf('day').utcOffset(-6).subtract(6, 'hour').toDate()/* .format('M/D/YYYY, h:mm A') */;
+
+        //obtener las transferencias del dia
+        let totalTransfers = await Transfer.aggregate([
+            {
+                $match: {
+                    sender: senderExit._id,
+                    date: {
+                        $gte: horaIni,
+                        $lte: horaFin
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    total: { $sum: "$amount" }
+                }
+            }
+        ]);
+
+        // Validar si el total de transferencias supera los 10000
+        if (totalTransfers.length > 0 && totalTransfers[0].total >= 10000) {
+            return res.status(400).send({ message: "Ha excedido el límite de transferencias para el día actual" });
+        }
+
         //validar que el remitente tenga el dinero suficiente
         let sender = await User.findOne({ _id: token })
         if (sender.money < data.amount) return res.status(400).send({ message: "No tiene suficiente dinero" })
-
-        //guardar la data del remitente
-        data.sender = token
+        else if (data.amount > 2000) return res.status(400).send({ message: "No puede transferir mas de 2000" })
 
         //validar que el numero de cuenta que pone sea el mismo que el nombre
         let receiver = await User.findOne({ noAccount: data.noAccount })
@@ -32,16 +67,6 @@ exports.save = async (req, res) => {
             $inc: { money: Number(data.amount) }
         }, { new: true });
 
-        /* //quitar el dinero de la cuenta del remitente
-        sender.money = sender.money - data.amount
-        console.log(sender.money)
-        await sender.save()
-
-        //agregar el dinero a la cuenta del destinatario
-        receiver.money = receiver.money + data.amount
-        console.log(receiver.money)
-        await receiver.save() */
-
         //guardar transferencia
         let transfer = new Transfer(data)
         await transfer.save()
@@ -51,8 +76,7 @@ exports.save = async (req, res) => {
     }
 }
 
-//100 + 5 1005
-
+//update no tiene que ir en el proyecto
 exports.update = async (req, res) => {
     try {
         //obtener id de la transferencia
@@ -68,22 +92,16 @@ exports.update = async (req, res) => {
         let receiver = await User.findOne({ _id: transfer.receiver })
 
         //cambiar la cantidad del sender
-        await User.findOneAndUpdate({ _id: sender._id }, {
-            $inc: { money: Number(transfer.amount) - Number(data.amount)}
-        }, { new: true });
+/*         await User.findOneAndUpdate({ _id: sender._id }, {
+            $inc: { money: Number(transfer.amount) },
+            $inc: { money: Number(data.amount) * -1}
+        }, { new: true }); */
 
         //cambiar la cantida del receiver
-        await User.findOneAndUpdate({ _id: receiver._id }, {
-            $inc: { money: Number(data.amount)}
+/*         await User.findOneAndUpdate({ _id: receiver._id }, {
+            $inc: { money: Number(data.amount) }
         }, { new: true });
-
-/*      sender.money = ((sender.money + transfer.amount) - data.amount)
-        await sender.save()
-        console.log(sender.money)
-        //cambiar la cantidad que se quito a la cuenta del destinatario
-        receiver.money = ((receiver.money - transfer.amount) + data.amount)
-        await receiver.save()
-        console.log(receiver.money) */
+ */
 
         //actualizar la transferencia
         let updateTransfer = await Transfer.findOneAndUpdate(
@@ -107,19 +125,25 @@ exports.cancel = async (req, res) => {
         let transfer = await Transfer.findOne({ _id: transferId })
         if (!transfer) return res.status(400).send({ message: "No se encontro la transferencia" })
 
+        //validacion de tiempo
+        let hora = moment()
+        let trasnferHour = moment(transfer.date)
+
+        let diff = hora.diff(trasnferHour, 'minutes')
+
+        if (diff > 1) return res.status(400).send({ message: "No se puede revertir la transferencia :(" })
+
         let sender = await User.findOne({ _id: transfer.sender })
         let receiver = await User.findOne({ _id: transfer.receiver })
-        /*         console.log(sender.money)
-                console.log(receiver.money) */
 
         //regresar la cantidad de dinero al emisor
-        sender.money = sender.money + transfer.amount
-        console.log(sender.money)
-        await sender.save()
-        //quitar la cantidad de dinero al receptor
-        receiver.money = receiver.money - transfer.amount
-        console.log(receiver.money)
-        await receiver.save()
+        await User.findOneAndUpdate({ _id: sender._id }, {
+            $inc: { money: Number(transfer.amount) }
+        }, { new: true });
+
+        await User.findOneAndUpdate({ _id: receiver._id }, {
+            $inc: { money: Number(transfer.amount) * -1 }
+        }, { new: true });
 
         //eliminar la transferencia
         let deleteTransfer = await Transfer.findOneAndDelete({ _id: transferId })
@@ -136,5 +160,15 @@ exports.getTransfers = async (req, res) => {
         return res.send({ message: "transferencias", transfers })
     } catch (err) {
         console.error(err)
+    }
+}
+
+exports.getTransfersByUser = async (req, res) => {
+    try {
+        let token = req.user.sub
+        let transfers = await Transfer.find({ sender: token })
+        return res.send({ message: "transferencias del usuario", transfers })
+    } catch (err) {
+        console.log(err)
     }
 }

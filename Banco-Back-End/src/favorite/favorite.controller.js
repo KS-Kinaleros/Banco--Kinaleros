@@ -17,6 +17,7 @@ exports.addFavorite = async (req, res) => {
         //validar que exista el usuario
         let userexist = await User.findOne({noAccount: data.noAccount})
         if(!userexist) return res.send({message: 'No existe el usuario'})
+        else if(userexist.DPI != data.DPI) return res.send({message: 'El DPI no coincide con el número de cuenta'})
 
         //validar que no exista algun favorito con el mismo alias
         let existFavorite = await Favorites.findOne({ nickname: data.nickname, person: token })

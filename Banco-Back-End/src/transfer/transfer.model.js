@@ -1,11 +1,12 @@
 'use strict'
 
 const mongoose = require('mongoose')
+const moment = require('moment')
 
 const transferSchema = new mongoose.Schema({
     date: {
         type: Date,
-        default: Date.now()
+        default: moment().utcOffset(-6).subtract(6, 'hour').toDate()
     },
     sender: {
         type: mongoose.Schema.Types.ObjectId,

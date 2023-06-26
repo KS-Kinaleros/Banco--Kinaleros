@@ -10,5 +10,6 @@ api.post('/save', ensureAuth ,transferController.save)
 api.put('/update/:id', transferController.update)
 api.delete('/cancel/:id', transferController.cancel)
 api.get('/get', transferController.getTransfers)
+api.get('/getUser', ensureAuth, transferController.getTransfersByUser)
 
 module.exports = api
