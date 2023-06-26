@@ -9,6 +9,7 @@ import { DepositPage } from './pages/vistas/DepositPage'
 import { TransferPage } from './pages/vistas/TransferPage'
 import { ProductPage } from './pages/vistas/ProductPage'
 import { UserPage } from './pages/vistas/UserPage'
+import { PrinPage } from './pages/PrinPage'
 
 export const AuthContext = createContext();
 
@@ -35,6 +36,10 @@ export const Index = () => {
       children: [
         {
           path: '/',
+          element: <PrinPage/>
+        },
+        {
+          path: '/home',
           element: <HomePage></HomePage>
         },
         {
