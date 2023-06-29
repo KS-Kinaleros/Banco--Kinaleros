@@ -16,6 +16,10 @@ const transferSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    DPI:{
+        type: Number,
+        required: true
+    },
     receiver: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

@@ -46,6 +46,10 @@ export const Index = () => {
           path: '/login',
           element: <LoginPage />,
         },
+        {
+          path: '/transfer',
+          element: <TransferPage />
+        },
         /* Cuenta del usuario */
         {
           path: '/account',
@@ -63,10 +67,6 @@ export const Index = () => {
             {
               path: 'products',
               element: <ProductPage />
-            },
-            {
-              path: 'transfers',
-              element: <TransferPage />
             },
             {
               path: 'deposits',

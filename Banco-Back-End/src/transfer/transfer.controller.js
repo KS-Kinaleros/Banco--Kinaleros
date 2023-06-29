@@ -57,7 +57,10 @@ exports.save = async (req, res) => {
 
         //validar que el numero de cuenta que pone sea el mismo que el nombre
         let receiver = await User.findOne({ noAccount: data.noAccount })
-        if (receiver._id != data.receiver) return res.status(400).send({ message: "El numero de cuenta no coincide con el nombre" })
+        if(!receiver) return res.status(400).send({message: 'No existe el usuario'})
+        else if(receiver.DPI != data.DPI) return res.status(400).send({message: 'El DPI no coincide con el numero de cuenta'})
+
+        data.receiver = receiver._id
 
         await User.findOneAndUpdate({ _id: sender._id }, {
             $inc: { money: Number(data.amount) * -1 }
@@ -70,9 +73,10 @@ exports.save = async (req, res) => {
         //guardar transferencia
         let transfer = new Transfer(data)
         await transfer.save()
-        return res.send({ message: "Transferencia realizada con exito" })
+        return res.status(200).send({ message: "Transferencia realizada con exito" })
     } catch (err) {
         console.error(err)
+        return res.status(400).send({ message: "Error al guardar la transferencia", err })
     }
 }
 
