@@ -138,3 +138,14 @@ exports.getUsers = async (req, res) => {
         console.error(err)
     }
 }
+
+exports.getUserToken = async(req, res)=>{
+    try {
+        let token = req.user.sub
+
+        let user = await User.findOne({ _id: token})
+        return res.send({message:"User", user})
+    } catch (err) {
+        console.log(err)
+    }
+}

@@ -3,6 +3,7 @@
 const express = require('express')
 const api = express.Router()
 const userController = require('./user.controller')
+const { ensureAuth, isAdmin } = require('../services/authenticated')
 
 api.get('/test', userController.test)
 api.post('/add', userController.createUser)
@@ -10,5 +11,6 @@ api.post('/login', userController.loginUser)
 api.put('/update/:id', userController.updateUser)
 api.delete('/delete/:id', userController.deleteUser)
 api.get('/get', userController.getUsers)
+api.get('/getToken', ensureAuth, userController.getUserToken)
 
 module.exports = api
