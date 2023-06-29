@@ -23,8 +23,9 @@ export const TransferPage = () => {
   }
 
 
-  const transfersave = async () => {
+  const transfersave = async (e) => {
     try {
+      e.preventDefault()
       const { data } = await axios.post('http://localhost:3100/transfer/save', form, { headers: headers })
       alert(data.message)
     } catch (err) {
@@ -57,7 +58,7 @@ export const TransferPage = () => {
             <input onChange={handleChange} name='amount' type="number" className="form-control form-control-lg" />
           </div>
 
-          <button onClick={() => transfersave()} type="submit" className="btn btn-primary">Enviar</button>
+          <button onClick={(e) => transfersave(e)} type="submit" className="btn btn-primary">Enviar</button>
 
         </form>
       </div>
