@@ -10,6 +10,11 @@ import { TransferPage } from './pages/vistas/TransferPage'
 import { ProductPage } from './pages/vistas/ProductPage'
 import { UserPage } from './pages/vistas/UserPage'
 import { PrinPage } from './pages/PrinPage'
+import { FavoritePage } from './pages/vistas/FavoritePage'
+import { AccountPage } from './pages/User/AccountPAge'
+import { InfoTransfersPage } from './pages/User/InfoTransfersPage'
+import { InfoDepositPage } from './pages/User/InfoDepositPage'
+import { InfoSellPage } from './pages/User/InfoSellPage'
 
 export const AuthContext = createContext();
 
@@ -36,7 +41,7 @@ export const Index = () => {
       children: [
         {
           path: '/',
-          element: <PrinPage/>
+          element: <PrinPage />
         },
         {
           path: '/home',
@@ -50,9 +55,28 @@ export const Index = () => {
           path: '/transfer',
           element: <TransferPage />
         },
+        {
+          path: '/favorites',
+          element: <FavoritePage/>
+        },
         /* Cuenta del usuario */
         {
           path: '/account',
+          element: <AccountPage />,
+          children: [
+            {
+              path: 'transfers',
+              element: <InfoTransfersPage />
+            },
+            {
+              path: 'deposits',
+              element: <InfoDepositPage />
+            },
+            {
+              path: 'sells',
+              element: <InfoSellPage />
+            }
+          ]
         },
 
         //dashboard

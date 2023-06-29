@@ -16,9 +16,9 @@ export const Navbar = () => {
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="#">
+                    <Link to='/home' className="navbar-brand" href="#">
                         <img src="./img/KS.png" alt="" width="55" height="45" className="d-inline-block align-text-top" />
-                    </a>
+                    </Link>
 
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -27,7 +27,7 @@ export const Navbar = () => {
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="#">Inicio</a>
+                                <Link to='/home' className="nav-link active" aria-current="page" href="#">Inicio</Link>
                             </li>
 
                             <li className="nav-item">
@@ -35,7 +35,10 @@ export const Navbar = () => {
                             </li>
 
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="#">Productos</a>
+                                <Link to='/favorites' className="nav-link active" aria-current="page" href="#">Favoritos</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link active" aria-current="page" href="#">Productos</Link>
                             </li>
 
                             {/* ver su cuenta */}
