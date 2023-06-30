@@ -6,7 +6,9 @@ const moment = require('moment')
 const transferSchema = new mongoose.Schema({
     date: {
         type: Date,
-        default: moment().utcOffset(-6).subtract(6, 'hour').toDate()
+    },
+    date1:{
+        type: String
     },
     sender: {
         type: mongoose.Schema.Types.ObjectId,

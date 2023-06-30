@@ -3,7 +3,6 @@
 const Transfer = require('./transfer.model')
 const User = require('../user/user.model')
 const moment = require('moment')
-const { default: mongoose } = require('mongoose')
 
 exports.test = async (req, res) => {
     res.send({ message: 'Test transfer is running' })
@@ -11,12 +10,20 @@ exports.test = async (req, res) => {
 
 exports.save = async (req, res) => {
     try {
-        //obtener data
-        let data = req.body
         //obtener el token del usuario que hara la transferencia
         let token = req.user.sub
+        
+        //obtener data
+        let data = {
+            date: new Date(),
+            date1: moment().format('MMMM Do YYYY, h:mm:ss a'),
+            sender: token, 
+            noAccount: req.body.noAccount,
+            DPI: req.body.DPI,
+            amount: req.body.amount
+        }
         //guardar la data del remitente
-        data.sender = token
+
 
         let senderExit = await User.findOne({ _id: token })
         if (!senderExit) return res.status(400).send({ message: "El usuario no existe" })
@@ -54,6 +61,7 @@ exports.save = async (req, res) => {
         let sender = await User.findOne({ _id: token })
         if (sender.money < data.amount) return res.status(400).send({ message: "No tiene suficiente dinero" })
         else if (data.amount > 2000) return res.status(400).send({ message: "No puede transferir mas de 2000" })
+        else if (data.amount < -1) return res.status(400).send({message:'No se puede transferir cantidades negativas'})
 
         //validar que el numero de cuenta que pone sea el mismo que el nombre
         let receiver = await User.findOne({ noAccount: data.noAccount })
@@ -130,12 +138,14 @@ exports.cancel = async (req, res) => {
         if (!transfer) return res.status(400).send({ message: "No se encontro la transferencia" })
 
         //validacion de tiempo
-        let hora = moment()
-        let trasnferHour = moment(transfer.date)
+        let hora = new Date()
+        let hora2 = new Date(transfer.date)
 
-        let diff = hora.diff(trasnferHour, 'minutes')
+        let diff = (hora - hora2) / (1000 * 60)
+        console.log(diff);
 
-        if (diff > 1) return res.status(400).send({ message: "No se puede revertir la transferencia :(" })
+
+        if (diff >= 1) return res.status(400).send({ message: "No se puede revertir la transferencia :(" })
 
         let sender = await User.findOne({ _id: transfer.sender })
         let receiver = await User.findOne({ _id: transfer.receiver })
