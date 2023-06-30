@@ -64,7 +64,7 @@ export const AccountPage = () => {
                                 <Link className='nav-link' to={'transfers'}>Transferencias</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className='nav-link' to={'deposits'}>Depositos</Link>
+                                <Link className='nav-link' to={'depositos'}>Depositos</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className='nav-link' to={'sells'}>Compras</Link>

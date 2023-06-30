@@ -32,14 +32,6 @@ export const DashboardPage = () => {
             </li>
 
             <li className='nav-item'>
-              <Link to='transfers'>
-
-                <i className='fs-5 fa fa-guage'></i><span className='fs-4 d-none d-sm-inline'>Transferencias</span>
-
-              </Link>
-            </li>
-
-            <li className='nav-item'>
               <Link to='deposits'>
 
                 <i className='fs-5 fa fa-guage'></i><span className='fs-4 d-none d-sm-inline'>Depositos</span>

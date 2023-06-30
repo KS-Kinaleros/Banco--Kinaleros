@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { Navbar } from '../../components/Navbar'
 import axios from 'axios'
+import { Link} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 export const TransferPage = () => {
+  const navigate = useNavigate()
 
   const headers = {
     'Content-Type': 'application/json',
@@ -28,6 +31,7 @@ export const TransferPage = () => {
       e.preventDefault()
       const { data } = await axios.post('http://localhost:3100/transfer/save', form, { headers: headers })
       alert(data.message)
+      navigate('/home')
     } catch (err) {
       console.log(err)
       alert(err.response?.data.message)

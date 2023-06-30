@@ -1,10 +1,9 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { CardProduct } from '../../components/cards/CardProduct'
-import { AddProduct } from '../../components/adds/AddProduct'
-import './Boton.css'
+import { CardProductUser } from '../../components/cards/CardProductUser'
+import { Navbar } from '../../components/Navbar'
 
-export const ProductPage = () => {
+export const ProductUser = () => {
   const [product, setProduct] = useState([{}])
 
   const getProduct = async () => {
@@ -23,7 +22,8 @@ export const ProductPage = () => {
 
   return (
     <>
-    <AddProduct/>
+         <Navbar />
+
       <main>
         <div className="left binding color">
           Productos
@@ -32,19 +32,18 @@ export const ProductPage = () => {
           {
             product.map(({ _id, name, description, price, availability }, i) => {
               return (
-                <CardProduct
+                <CardProductUser
                   key={i}
                   _id={_id}
-                  title={name}
+                  name={name}
                   description={description}
                   price={price}
                   availability={availability}
-                ></CardProduct>
+                ></CardProductUser>
               )
             })
           }
         </div>
-        <button className='btn btn-success floating-button' data-bs-toggle="modal" data-bs-target="#myModal">Agregar</button>
       </main>
     </>
   )

@@ -15,6 +15,7 @@ import { AccountPage } from './pages/User/AccountPAge'
 import { InfoTransfersPage } from './pages/User/InfoTransfersPage'
 import { InfoDepositPage } from './pages/User/InfoDepositPage'
 import { InfoSellPage } from './pages/User/InfoSellPage'
+import { ProductUser } from './pages/User/ProductUser'
 
 export const AuthContext = createContext();
 
@@ -57,7 +58,11 @@ export const Index = () => {
         },
         {
           path: '/favorites',
-          element: <FavoritePage/>
+          element: <FavoritePage />
+        },
+        {
+          path: '/productos',
+          element: <ProductUser />
         },
         /* Cuenta del usuario */
         {
@@ -69,7 +74,7 @@ export const Index = () => {
               element: <InfoTransfersPage />
             },
             {
-              path: 'deposits',
+              path: 'depositos',
               element: <InfoDepositPage />
             },
             {

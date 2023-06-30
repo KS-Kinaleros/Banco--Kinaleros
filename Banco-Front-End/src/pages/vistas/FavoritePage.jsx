@@ -13,7 +13,7 @@ export const FavoritePage = () => {
 
   const getFavorites = async () => {
     try {
-      const { data } = await axios.get('http://localhost:3100/favorites/get', { headers: headers })
+      const { data } = await axios.get('http://localhost:3100/favorite/get', { headers: headers })
       if (data.favorites) {
         setFavorites(data.favorites)
         console.log(data.favorites)
@@ -28,11 +28,9 @@ export const FavoritePage = () => {
   return (
     <>
       <Navbar />
-      <div>Favorites</div>
-
       <div className='row g-0 justify-content-center'>
         {
-          product.map(({ _id, noAccount, DPI, nickname }, i) => {
+          favorites.map(({ _id, noAccount, DPI, nickname }, i) => {
             return (
               <CardFavorites
                 key={i}
