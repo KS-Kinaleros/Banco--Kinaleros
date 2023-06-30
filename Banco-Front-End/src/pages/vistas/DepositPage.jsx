@@ -23,13 +23,14 @@ export const DepositPage = () => {
 
     return (
         <>
+        <AddDeposit/>
             <main>
                 <div className="left binding color">
-                    Productos
+                    Depositos
                 </div>
                 <div className='row g-0 justify-content-center'>
                     {
-                        deposit.map(({ _id, date, noAccount, nameAccount, amount}, i) => {
+                        deposit?.map(({ _id, date, noAccount, nameAccount, amount}, i) => {
                             return (
                                 <CardDeposit
                                     key={i}

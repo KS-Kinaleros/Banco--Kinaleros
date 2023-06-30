@@ -20,7 +20,7 @@ export const CardProduct = ({ _id, title, description, price, availability }) =>
                 <div className="card-body">
                     <h5 className='card-title'>{title}</h5>
                     <p className='card-text'>{description}</p>
-                    <p className='card-text'>{price}</p>
+                    <p className='card-text' style={{ color: '#BADD7C' }}>{price}</p>
                     <p className='card-text'>{availability}</p>
 
                     <button className='btn btn-warning' data-bs-toggle="modal" data-bs-target="#myProduct">Editar</button>

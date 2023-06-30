@@ -1,8 +1,8 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
-export const AddDeposit = () => {
-    const title = 'Realizar Deposito'
+export const AddFavorite = () => {
+    const title = 'Agregar Favoritos'
 
     const headers = {
         'Content-Type': 'application/json',
@@ -11,8 +11,8 @@ export const AddDeposit = () => {
 
     const [form, setForm] = useState({
         noAccount: '',
-        nameAccount: '',
-        amount: '',
+        DPI: '',
+        nickname: ''
     })
 
     const handleChange = (e) => {
@@ -23,14 +23,13 @@ export const AddDeposit = () => {
 
     }
 
-    const saveDeposit = async (e) => {
+    const saveFavorite = async (e) => {
         try {
             e.preventDefault()
-            const { data } = await axios.post('http://localhost:3100/deposit/save', form, {headers: headers})
+            const { data } = await axios.post('http://localhost:3100/favorite/save', form, {headers: headers})
             alert(data.message)
         } catch (err) {
             console.log(err)
-            alert(err?.response.data.message)
         }
     }
 
@@ -50,21 +49,22 @@ export const AddDeposit = () => {
                             <div className="container-fluid">
                                 <form className="row g-3">
                                     <div className="col-md-6">
-                                        <label  className="form-label">Numero de Cuenta</label>
-                                        <input type="number" className="form-control" name='noAccount' onChange={handleChange} />
+                                        <label className="form-label">DPI</label>
+                                        <input type="text" className="form-control" name='DPI' onChange={handleChange} />
                                     </div>
                                     <div className="col-md-6">
-                                        <label  className="form-label">Nombre del titular</label>
-                                        <input type="text" className="form-control" name='nameAccount' onChange={handleChange} />
+                                        <label className="form-label">Numero de Cuenta</label>
+                                        <input type="text" className="form-control" name='noAccount' onChange={handleChange} />
                                     </div>
 
                                     <div className="col-md-6">
-                                        <label className="form-label">Monto</label>
-                                        <input type="number" className="form-control" name='amount' onChange={handleChange} />
-                                    </div> 
+                                        <label className="form-label">Apodo</label>
+                                        <input type="text" className="form-control" name='nickname' onChange={handleChange} />
+                                    </div>
+
 
                                     <div className="modal-footer">
-                                        <button onClick={(e) => saveDeposit(e)} type="button" className="btn btn-primary">Realizar Deposito</button>
+                                        <button onClick={(e) => saveFavorite(e)} type="button" className="btn btn-primary">Guardar Favorito</button>
                                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                     </div>
 
@@ -76,6 +76,8 @@ export const AddDeposit = () => {
                     </div>
                 </div>
             </div >
+
         </>
     )
 }
+

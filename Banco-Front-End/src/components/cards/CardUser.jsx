@@ -22,7 +22,7 @@ export const CardUser = ({ _id, noAccount, DPI, title, surname, email, money }) 
                     <p className='card-text'>{noAccount}</p>
                     <p className='card-text'>{DPI}</p>
                     <p className='card-text'>{email}</p>
-                    <p className='card-text'>{money}</p>
+                    <p className='card-text' style={{ color: '#BADD7C' }}>{money}</p>
 
                     <div className="d-flex justify-content-center">
                         <button className='btn btn-warning me-2' data-bs-toggle="modal" data-bs-target="#myUser">Editar</button>

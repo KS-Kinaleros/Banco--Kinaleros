@@ -26,7 +26,7 @@ export const UpdateDeposit = ({ _id }) => {
 
   return (
     <>
-      <div className="modal" tabIndex="-1" id="myProduct">
+      <div className="modal" tabIndex="-1" id="myDeposit">
         <div className="modal-dialog">
           <div className="modal-content">
             {/* titulo */}
@@ -35,7 +35,7 @@ export const UpdateDeposit = ({ _id }) => {
             </div>
 
             {/* formulario */}
-            <div class="modal-dialog modal-sm">
+            <div className="modal-dialog modal-sm">
               <div className="mb-3">
                 <label htmlFor="" className="form-label">Monto</label>
                 <input onChange={handleChange} name='amount' type="number" className="form-control" required />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Navbar } from '../../components/Navbar'
 import axios from 'axios'
 import { CardFavorites } from '../../components/cards/CardFavorites'
+import { AddFavorite } from '../../components/adds/AddFavorite'
 
 export const FavoritePage = () => {
   const [favorites, setFavorites] = useState([{}])
@@ -28,22 +29,28 @@ export const FavoritePage = () => {
   return (
     <>
       <Navbar />
-      <div className='row g-0 justify-content-center'>
-        {
-          favorites.map(({ _id, noAccount, DPI, nickname }, i) => {
-            return (
-              <CardFavorites
-                key={i}
-                _id={_id}
-                title={noAccount}
-                DPI={DPI}
-                nickname={nickname}
-              ></CardFavorites>
-            )
-          })
-        }
-      </div>
-
+      <AddFavorite/>
+      <main>
+        <div className="left binding color" style={{color: '#fff'}}>
+          Favoritos
+        </div>
+        <div className='row g-0 justify-content-center'>
+          {
+            favorites.map(({ _id, noAccount, DPI, nickname }, i) => {
+              return (
+                <CardFavorites
+                  key={i}
+                  _id={_id}
+                  title={noAccount}
+                  DPI={DPI}
+                  nickname={nickname}
+                ></CardFavorites>
+              )
+            })
+          }
+        </div>
+        <button className='btn btn-info floating-button' data-bs-toggle="modal" data-bs-target="#myModal">Agregar Favorito</button>
+      </main>
     </>
   )
 }

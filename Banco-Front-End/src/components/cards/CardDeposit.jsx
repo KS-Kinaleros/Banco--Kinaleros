@@ -21,10 +21,10 @@ export const CardDeposit = ({ _id, title, date, noAccount, amount }) => {
                     <h5 className='card-title'>{title}</h5>
                     <p className='card-text'>{date}</p>
                     <p className='card-text'>{noAccount}</p>
-                    <p className='card-text'>{amount}</p>
+                    <p className='card-text' style={{ color: '#BADD7C' }}>{amount}</p>
 
-                    <button className='btn btn-warning' data-bs-toggle="modal" data-bs-target="#myProduct">Editar</button>
-                    <button className='btn btn-danger' onClick={() => cancelDeposit(_id)}>Canelar</button>
+                    <button className='btn btn-warning' data-bs-toggle="modal" data-bs-target="#myDeposit">Editar</button>
+                    <button className='btn btn-danger' onClick={() => cancelDeposit(_id)}>Cancelar</button>
                 </div>
             </div>
 
