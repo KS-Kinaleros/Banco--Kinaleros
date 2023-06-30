@@ -5,7 +5,6 @@ const mongoose = require('mongoose')
 const DepositSchema = mongoose.Schema({
     Date:{
         type: Date,
-        default: Date.now()
     },
     worker:{
         type: mongoose.Schema.Types.ObjectId,

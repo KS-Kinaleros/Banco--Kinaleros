@@ -10,6 +10,10 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    surname:{
+        type: String,
+        required: true
+    },
     username: {
         type: String,
         required: true

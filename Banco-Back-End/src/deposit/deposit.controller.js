@@ -23,6 +23,7 @@ exports.save = async (req, res) => {
         if (worker.role != 'ADMIN') return res.status(404).send({ message: 'No tienes permisos para realizar esta accion' })
 
         data.worker = token
+        date = new Date()
 
         //agregar la cantidad de dinero a la cuenta
         await User.findOneAndUpdate({ _id: userexist._id }, {
@@ -97,8 +98,8 @@ exports.cancel = async (req, res) => {
 
 exports.get = async (req, res) => {
     try {
-        let deposit = await Deposit.findOne()
-        res.send({ message: 'Depositos encontrados', deposit })
+        let deposits = await Deposit.findOne()
+        res.send({ message: 'Depositos encontrados', deposits })
     } catch (err) {
         console.error(err)
     }
