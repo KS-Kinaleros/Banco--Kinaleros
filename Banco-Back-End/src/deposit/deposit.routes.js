@@ -10,5 +10,6 @@ api.post('/save', ensureAuth, depositController.save)
 api.put('/update/:id', depositController.update)
 api.delete('/cancel/:id', depositController.cancel)
 api.get('/get', depositController.get)
+api.get('/getToken', ensureAuth, depositController.getToken)
 
 module.exports = api

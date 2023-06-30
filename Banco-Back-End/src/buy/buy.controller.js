@@ -93,3 +93,5 @@ exports.getBuys = async (req, res) => {
         console.error(err);
     }
 }
+
+//obtener las compras que hizo la persona

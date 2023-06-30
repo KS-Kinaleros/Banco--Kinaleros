@@ -15,7 +15,7 @@ exports.save = async (req, res) => {
         let token = req.user.sub
         //verificar si la cuenta existe validando el numero de cuenta y el nombre del usuario
         let userexist = await User.findOne({ noAccount: data.noAccount })
-        if( userexist.name != data.nameAccount ) return res.status(404).send({ message: 'El nombre no coincide con el número de cuenta' })
+        if (userexist.name != data.nameAccount) return res.status(404).send({ message: 'El nombre no coincide con el número de cuenta' })
         /* if (!userexist) return res.status(404).send({ message: 'Cuenta no encontrada' }) */
 
         //verificar si el usuario es trabajador que hara el deposito
@@ -23,7 +23,7 @@ exports.save = async (req, res) => {
         if (worker.role != 'ADMIN') return res.status(404).send({ message: 'No tienes permisos para realizar esta accion' })
 
         data.worker = token
-        date = new Date()
+        data.date = new Date()
 
         //agregar la cantidad de dinero a la cuenta
         await User.findOneAndUpdate({ _id: userexist._id }, {
@@ -98,9 +98,26 @@ exports.cancel = async (req, res) => {
 
 exports.get = async (req, res) => {
     try {
-        let deposits = await Deposit.findOne()
+        let deposits = await Deposit.find()
         res.send({ message: 'Depositos encontrados', deposits })
     } catch (err) {
         console.error(err)
+    }
+}
+
+//obtener los depositos que le hicieron a una persona
+exports.getToken = async (req, res) => {
+    try {
+        let token = req.user.sub
+        //buscar por el tokbe
+        let userToken = await User.findOne({_id: token})
+        if(!userToken) return res.status.send({message:'Usuario no existe'})
+
+
+
+        let depositsPerson = await Deposit.find({noAccount: userToken.noAccount})
+        res.send({message:'Depositos', depositsPerson})
+    } catch (err) {
+        console.log(err)
     }
 }

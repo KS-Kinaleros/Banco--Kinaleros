@@ -180,9 +180,11 @@ exports.getTransfers = async (req, res) => {
 exports.getTransfersByUser = async (req, res) => {
     try {
         let token = req.user.sub
-        let transfers = await Transfer.find({ sender: token })
+        let transfers = await Transfer.find({ sender: token }).populate('sender','name').populate('receiver','name')
         return res.send({ message: "transferencias del usuario", transfers })
     } catch (err) {
         console.log(err)
     }
 }
+
+//obtener todas las transferencias que hizo a la persona
