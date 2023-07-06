@@ -10,7 +10,7 @@ export const CardProductUser = ({ _id, name, description, price }) => {
 
     const buyProduct = async (/* _id */) => {
         try {
-            const { data } = await axios.post(`http://localhost:3100/buy/saveBuy/${_id}`, { headers: headers })
+            const { data } = await axios.post(`http://localhost:3100/buy/saveBuy/${_id}`,{}, { headers: headers })
             alert(data.message)
         } catch (err) {
             console.log(err)
