@@ -7,15 +7,16 @@ export const CardProductUser = ({ _id, name, description, price }) => {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
     }
-    
-    const buyProduct = async (_id) => {
+
+    const buyProduct = async (/* _id */) => {
         try {
-            const {data} = await axios.post(`http://localhost:3100/buy/saveBuy/${_id}`, {headers: headers})
+            const { data } = await axios.post(`http://localhost:3100/buy/saveBuy/${_id}`, { headers: headers })
             alert(data.message)
         } catch (err) {
             console.log(err)
+            alert(err?.response.data.message)
         }
-    } 
+    }
 
 
     return (
@@ -30,7 +31,7 @@ export const CardProductUser = ({ _id, name, description, price }) => {
                             <h5 className="card-title">{name}</h5>
                             <p className="card-text">{description}</p>
                             <p className="card-text" style={{ color: '#FB6540' }}>Precio: {price}</p>
-                            <button onClick={()=> buyProduct(_id)} type="button" className="btn btn-outline-info">Comprar</button>
+                            <button onClick={() => buyProduct(_id)} type="button" className="btn btn-outline-info">Comprar</button>
                         </div>
                     </div>
                 </div>

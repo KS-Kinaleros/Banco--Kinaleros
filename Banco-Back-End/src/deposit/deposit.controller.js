@@ -2,6 +2,7 @@
 
 const Deposit = require('./deposit.model')
 const User = require('../user/user.model')
+const moment = require('moment')
 
 exports.test = async (req, res) => {
     res.send({ message: 'Test deposit is running' })
@@ -9,10 +10,18 @@ exports.test = async (req, res) => {
 
 exports.save = async (req, res) => {
     try {
-        //obtener data
-        let data = req.body
         //obtener token del trabajor
         let token = req.user.sub
+        
+        //obtener data
+        let data = {
+            date: new Date(),
+            date1: moment().format('MMMM Do YYYY, h:mm:ss a'),
+            worker: token,
+            noAccount: req.body.noAccount,
+            nameAccount: req.body.nameAccount,
+            amount: req.body.amount
+        }
         //verificar si la cuenta existe validando el numero de cuenta y el nombre del usuario
         let userexist = await User.findOne({ noAccount: data.noAccount })
         if (userexist.name != data.nameAccount) return res.status(404).send({ message: 'El nombre no coincide con el número de cuenta' })
@@ -21,9 +30,6 @@ exports.save = async (req, res) => {
         //verificar si el usuario es trabajador que hara el deposito
         let worker = await User.findOne({ _id: token })
         if (worker.role != 'ADMIN') return res.status(404).send({ message: 'No tienes permisos para realizar esta accion' })
-
-        data.worker = token
-        data.date = new Date()
 
         //agregar la cantidad de dinero a la cuenta
         await User.findOneAndUpdate({ _id: userexist._id }, {
@@ -113,11 +119,18 @@ exports.getToken = async (req, res) => {
         let userToken = await User.findOne({_id: token})
         if(!userToken) return res.status.send({message:'Usuario no existe'})
 
-
-
         let depositsPerson = await Deposit.find({noAccount: userToken.noAccount})
         res.send({message:'Depositos', depositsPerson})
     } catch (err) {
         console.log(err)
     }
 }
+
+//get para el historial
+/* exports.getHistory = async (req, res) => {
+    try {
+        let token = req.user.sub
+    } catch (err) {
+        console.log(err)
+    }
+} */

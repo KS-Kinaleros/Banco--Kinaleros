@@ -19,8 +19,8 @@ export const CardDeposit = ({ _id, title, date, noAccount, amount }) => {
             <div className="card m-3 g-0" style={{ maxWidth: '18rem', maxHeight: '20rem' }}>
                 <div className="card-body">
                     <h5 className='card-title'>{title}</h5>
-                    <p className='card-text'>{date}</p>
                     <p className='card-text'>{noAccount}</p>
+                    <p className='card-text'>{date}</p>
                     <p className='card-text' style={{ color: '#BADD7C' }}>{amount}</p>
 
                     <button className='btn btn-warning' data-bs-toggle="modal" data-bs-target="#myDeposit">Editar</button>

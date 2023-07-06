@@ -30,14 +30,14 @@ export const DepositPage = () => {
                 </div>
                 <div className='row g-0 justify-content-center'>
                     {
-                        deposit?.map(({ _id, date, noAccount, nameAccount, amount}, i) => {
+                        deposit?.map(({ _id, date1, noAccount, nameAccount, amount}, i) => {
                             return (
                                 <CardDeposit
                                     key={i}
                                     _id={_id}
                                     title={nameAccount}
-                                    date={date}
                                     noAccount={noAccount}
+                                    date={date1}
                                     amount={amount}
                                 ></CardDeposit>
                             )

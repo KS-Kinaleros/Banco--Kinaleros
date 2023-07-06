@@ -3,6 +3,7 @@ import { Navbar } from '../../components/Navbar'
 import axios from 'axios'
 import { Link} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 export const TransferPage = () => {
   const navigate = useNavigate()
@@ -24,7 +25,6 @@ export const TransferPage = () => {
       [e.target.name]: e.target.value
     })
   }
-
 
   const transfersave = async (e) => {
     try {

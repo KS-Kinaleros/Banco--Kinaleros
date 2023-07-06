@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import { AuthContext } from '../Index';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 export const LoginPage = () => {
     const { loggedIn, setLoggedIn, setDataUser } = useContext(AuthContext);
@@ -24,16 +25,35 @@ export const LoginPage = () => {
             e.preventDefault()
             const { data } = await axios.post('http://localhost:3100/user/login', form)
             console.log(data.user)
+
+            Swal.fire({
+                title: "Log in",
+                text: `${data.message}`,
+                icon: "success",
+            });
+
             if (data.message) {
-                alert(data.message)
                 localStorage.setItem('token', data.token)
                 setDataUser(data.userLogged)
                 setLoggedIn(true)
+
                 navigate('/dashboard')
             }
+            /*              if (data.message) {
+                             alert(data.message)
+                             localStorage.setItem('token', data.token)
+                             setDataUser(data.userLogged)
+                             setLoggedIn(true)
+                             navigate('/dashboard')
+                         } */
         } catch (err) {
             console.error(err)
-            alert(err.response?.data.message)
+            Swal.fire({
+                title: "Error, Invalid Credentials",
+                text: `${err.response.data.message}`,
+                icon: "warning",
+            });
+            /* alert(err.response?.data.message) */
         }
     }
 

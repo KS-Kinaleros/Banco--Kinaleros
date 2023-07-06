@@ -3,8 +3,11 @@
 const mongoose = require('mongoose')
 
 const DepositSchema = mongoose.Schema({
-    Date:{
+    date:{
         type: Date,
+    },
+    date1:{
+        type: String
     },
     worker:{
         type: mongoose.Schema.Types.ObjectId,

@@ -27,8 +27,9 @@ export const InfoTransfersPage = () => {
   return (
     <>
 
-
-      <table className="table table-dark table-striped-columns">
+      {/* version black */}
+      {/* <table className="table table-dark table-striped-columns"> */}
+      <table className="table ">
         <thead>
           <tr>
             <th>Fecha</th>
@@ -63,7 +64,7 @@ export const InfoTransfersPage = () => {
 
 
       {/* reservaciones */}
-{/*       <h4 classNameName="mt-5 mb-4">Transacciones:</h4>
+      {/*       <h4 classNameName="mt-5 mb-4">Transacciones:</h4>
       <div classNameName="table-responsive">
         <table className="table table-striped">
 

@@ -12,12 +12,12 @@ exports.save = async (req, res) => {
     try {
         //obtener el token del usuario que hara la transferencia
         let token = req.user.sub
-        
+
         //obtener data
         let data = {
             date: new Date(),
             date1: moment().format('MMMM Do YYYY, h:mm:ss a'),
-            sender: token, 
+            sender: token,
             noAccount: req.body.noAccount,
             DPI: req.body.DPI,
             amount: req.body.amount
@@ -61,12 +61,12 @@ exports.save = async (req, res) => {
         let sender = await User.findOne({ _id: token })
         if (sender.money < data.amount) return res.status(400).send({ message: "No tiene suficiente dinero" })
         else if (data.amount > 2000) return res.status(400).send({ message: "No puede transferir mas de 2000" })
-        else if (data.amount < -1) return res.status(400).send({message:'No se puede transferir cantidades negativas'})
+        else if (data.amount < -1) return res.status(400).send({ message: 'No se puede transferir cantidades negativas' })
 
         //validar que el numero de cuenta que pone sea el mismo que el nombre
         let receiver = await User.findOne({ noAccount: data.noAccount })
-        if(!receiver) return res.status(400).send({message: 'No existe el usuario'})
-        else if(receiver.DPI != data.DPI) return res.status(400).send({message: 'El DPI no coincide con el numero de cuenta'})
+        if (!receiver) return res.status(400).send({ message: 'No existe el usuario' })
+        else if (receiver.DPI != data.DPI) return res.status(400).send({ message: 'El DPI no coincide con el numero de cuenta' })
 
         data.receiver = receiver._id
 
@@ -104,16 +104,16 @@ exports.update = async (req, res) => {
         let receiver = await User.findOne({ _id: transfer.receiver })
 
         //cambiar la cantidad del sender
-/*         await User.findOneAndUpdate({ _id: sender._id }, {
-            $inc: { money: Number(transfer.amount) },
-            $inc: { money: Number(data.amount) * -1}
-        }, { new: true }); */
+        /*         await User.findOneAndUpdate({ _id: sender._id }, {
+                    $inc: { money: Number(transfer.amount) },
+                    $inc: { money: Number(data.amount) * -1}
+                }, { new: true }); */
 
         //cambiar la cantida del receiver
-/*         await User.findOneAndUpdate({ _id: receiver._id }, {
-            $inc: { money: Number(data.amount) }
-        }, { new: true });
- */
+        /*         await User.findOneAndUpdate({ _id: receiver._id }, {
+                    $inc: { money: Number(data.amount) }
+                }, { new: true });
+         */
 
         //actualizar la transferencia
         let updateTransfer = await Transfer.findOneAndUpdate(
@@ -180,7 +180,9 @@ exports.getTransfers = async (req, res) => {
 exports.getTransfersByUser = async (req, res) => {
     try {
         let token = req.user.sub
-        let transfers = await Transfer.find({ sender: token }).populate('sender','name').populate('receiver','name')
+        let transfers = await Transfer.find({
+            $or: [{ sender: token }, { receiver: token }]
+        }).populate('sender', 'name').populate('receiver', 'name')
         return res.send({ message: "transferencias del usuario", transfers })
     } catch (err) {
         console.log(err)

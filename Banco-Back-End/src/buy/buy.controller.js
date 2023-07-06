@@ -87,7 +87,7 @@ exports.cancelBuy = async (req, res) => {
 exports.getBuys = async (req, res) => {
     try {
         let token = req.user.sub
-        let buys = await Buy.find({ user: token }).populate('product', 'name')
+        let buys = await Buy.find({ user: token }).populate('user', 'name').populate('product', 'name')
         return res.send({ message: 'Buys', buys })
     } catch (err) {
         console.error(err);
