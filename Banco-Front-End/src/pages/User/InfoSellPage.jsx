@@ -29,9 +29,9 @@ export const InfoSellPage = () => {
         <thead>
           <tr>
             <th>Fecha</th>
-            <th>No de Cuenta</th>
-            <th>Nombre de la Cuenta</th>
-            <th>Monto</th>
+            <th>Comprador</th>
+            <th>Producto</th>
+            <th>Costo</th>
             {/* Otros encabezados de columna */}
           </tr>
         </thead>
@@ -43,7 +43,7 @@ export const InfoSellPage = () => {
                   <td>{date1}</td>
                   <td>{user?.name}</td>
                   <td>{product?.name}</td>
-                  <td>{total}</td>
+                  <td>Q{total}.00</td>
 
                   {/* para cancelar la transferencia */}
                   {/* <td> <button onClick={() => elimRe(_id)} classNameName='btn btn-danger'>Cancerlar</button></td> */}
