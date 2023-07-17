@@ -26,7 +26,7 @@ exports.buy = async (req, res) => {
         if (userExist.money < productExist.price) return res.status(400).send({ message: 'No tienes dinero suficiente para la compra' })
 
         await User.findOneAndUpdate({ _id: userExist._id }, {
-            $inc: { money: Number(productExist.price) * -1 }
+            $inc: { money: Number(productExist.price) * -1, movements: 1 }
         }, { new: true })
 
         let data = {

@@ -46,6 +46,10 @@ const userSchema = mongoose.Schema({
     money:{
         type: Number
     },
+    movements:{
+        type: Number,
+        default: 0
+    },
     role:{
         type: String,
     }

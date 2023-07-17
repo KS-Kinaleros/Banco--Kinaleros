@@ -7,6 +7,7 @@ const {ensureAuth, isAdmin} = require('../services/authenticated')
 
 api.get('/test', transferController.test)
 api.post('/save', ensureAuth ,transferController.save)
+api.post('/transferFavorite/:id', ensureAuth, transferController.transferFavorite)
 api.put('/update/:id', transferController.update)
 api.delete('/cancel/:id', transferController.cancel)
 api.get('/get', transferController.getTransfers)

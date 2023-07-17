@@ -51,9 +51,9 @@ exports.loginUser = async (req, res) => {
                 role: user.role
             }
             let token = await createToken(user)
-            return res.send({ message: "user logged satisfactoriamente", token, userLogged })
+            return res.send({ message: "Inicio de sesión exitoso", token, userLogged })
         }
-        return res.status(400).send({ message: "invalid credentials" })
+        return res.status(400).send({ message: "Credenciales invalidas" })
     } catch (err) {
         console.error(err)
         return res.status(500).send({ message: "" })
@@ -115,6 +115,26 @@ exports.updateUser = async (req, res) => {
     }
 }
 
+
+exports.updateUserToken = async (req, res) => {
+    try {
+        //obtener el token
+        let token = req.user.sub
+        //obtener data
+        let data = req.body;
+        //actualizar
+        let userUpdate = await User.findOneAndUpdate(
+            { _id: token },
+            data,
+            { new: true }
+        )
+        if(!userUpdate) return res.status(400).send({message: "Error al actualizar estos datos"})
+        return res.send({ message: "Datos actualizados correctamente", userUpdate })
+    } catch (err) {
+        console.error(err)
+    }
+}
+
 exports.deleteUser = async (req, res) => {
     try {
         //obtener id del usuario
@@ -122,7 +142,7 @@ exports.deleteUser = async (req, res) => {
 
         let userDelete = await User.findOneAndDelete({ _id: userId })
         if (!userDelete) return res.status(400).send({ message: "Error deleting account" })
-        return res.send({ message: "Account deleted successfully", userDelete })
+        return res.send({ message: "Cuenta Eliminada", userDelete })
     } catch (err) {
         console.error(err)
     }
@@ -138,13 +158,22 @@ exports.getUsers = async (req, res) => {
     }
 }
 
-exports.getUserToken = async(req, res)=>{
+exports.getUserToken = async (req, res) => {
     try {
         let token = req.user.sub
-
-        let user = await User.findOne({ _id: token})
-        return res.send({message:"User", user})
+        let user = await User.findOne({ _id: token })
+        return res.send({ message: "User", user })
     } catch (err) {
         console.log(err)
+    }
+}
+
+//personas con mas movimientos
+exports.getUsersMovements = async (req, res) => {
+    try {
+        let users = await User.find().sort({ movements: -1 }).limit(5)
+        return res.send({ message: 'usuarios', users })
+    } catch (err) {
+        console.error(err)
     }
 }

@@ -12,7 +12,7 @@ exports.save = async (req, res) => {
     try {
         //obtener token del trabajor
         let token = req.user.sub
-        
+
         //obtener data
         let data = {
             date: new Date(),
@@ -33,7 +33,7 @@ exports.save = async (req, res) => {
 
         //agregar la cantidad de dinero a la cuenta
         await User.findOneAndUpdate({ _id: userexist._id }, {
-            $inc: { money: Number(data.amount) }
+            $inc: { money: Number(data.amount), movements: Number(1) }
         }, { new: true })
 
 
@@ -58,11 +58,17 @@ exports.update = async (req, res) => {
         if (!depositExist) return res.status(404).send({ message: 'Deposito no encontrado' })
 
         //validar que si exista el usuario
-        let user = await User.findOne({ _id: depositExist.nameAccount })
+        let user = await User.findOne({ name: depositExist.nameAccount })
 
-        //cambiar la cantidad de dinero en la cuenta
-        user.money = ((user.money - depositExist.amount) + data.amount)
-        await user.save()
+        //quitar el dinero
+        await User.findOneAndUpdate({ _id: user._id }, {
+            $inc: { money: Number(depositExist.amount) * -1}
+        }, { new: true });
+
+        //agregar la nueva cantidad
+        await User.findOneAndUpdate({ _id: user._id }, {
+            $inc: { money: Number(data.amount)}
+        }, { new: true });
 
         //actualizar el deposito
         let updateDeposit = await Deposit.findOneAndUpdate(
@@ -74,6 +80,7 @@ exports.update = async (req, res) => {
         return res.status(200).send({ message: 'Deposito actualizado exitosamente' })
     } catch (err) {
         console.error(err)
+        return res.status(400).send({ message: "Error al editar el deposito", err })
     }
 }
 
@@ -86,12 +93,21 @@ exports.cancel = async (req, res) => {
         let depositExist = await Deposit.findOne({ _id: depositId })
         if (!depositExist) return res.status(404).send({ message: 'Deposito no encontrado' })
 
+        let hora = new Date()
+        let hora2 = new Date(depositExist.date)
+
+        let diff = (hora - hora2) / (1000 * 60)
+        console.log(diff)
+
+        if (diff >= 1) return res.status(400).send({ message: 'No se puede cancelar el deposito, ya pasaron mas de 1 minuto' })
+
         //quitar la cantidad de dinero de la cuente del receptor
-        let user = await User.findOne({ _id: depositExist.nameAccount })
+        let user = await User.findOne({ noAccount: depositExist.noAccount })
         if (!user) return res.status(404).send({ message: 'Usuario no encontrado' })
 
-        user.money = user.money - depositExist.amount
-        await user.save()
+        await User.findOneAndUpdate({ _id: user._id }, {
+            $inc: { money: Number(depositExist.amount) * -1, movements: Number(1) * -1 }
+        }, { new: true })
 
         //eliminar el deposito
         let deleteDeposit = await Deposit.findOneAndDelete({ _id: depositId })
@@ -116,11 +132,11 @@ exports.getToken = async (req, res) => {
     try {
         let token = req.user.sub
         //buscar por el tokbe
-        let userToken = await User.findOne({_id: token})
-        if(!userToken) return res.status.send({message:'Usuario no existe'})
+        let userToken = await User.findOne({ _id: token })
+        if (!userToken) return res.status.send({ message: 'Usuario no existe' })
 
-        let depositsPerson = await Deposit.find({noAccount: userToken.noAccount})
-        res.send({message:'Depositos', depositsPerson})
+        let depositsPerson = await Deposit.find({ noAccount: userToken.noAccount })
+        res.send({ message: 'Depositos', depositsPerson })
     } catch (err) {
         console.log(err)
     }

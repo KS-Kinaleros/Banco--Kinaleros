@@ -2,6 +2,7 @@
 
 const Transfer = require('./transfer.model')
 const User = require('../user/user.model')
+const Favorites = require('../favorite/favorite.model')
 const moment = require('moment')
 
 exports.test = async (req, res) => {
@@ -71,11 +72,11 @@ exports.save = async (req, res) => {
         data.receiver = receiver._id
 
         await User.findOneAndUpdate({ _id: sender._id }, {
-            $inc: { money: Number(data.amount) * -1 }
+            $inc: { money: Number(data.amount) * -1, movements: Number(1) }
         }, { new: true });
 
         await User.findOneAndUpdate({ _id: receiver._id }, {
-            $inc: { money: Number(data.amount) }
+            $inc: { money: Number(data.amount), movements: Number(1) }
         }, { new: true });
 
         //guardar transferencia
@@ -103,17 +104,37 @@ exports.update = async (req, res) => {
         let sender = await User.findOne({ _id: transfer.sender })
         let receiver = await User.findOne({ _id: transfer.receiver })
 
-        //cambiar la cantidad del sender
-        /*         await User.findOneAndUpdate({ _id: sender._id }, {
-                    $inc: { money: Number(transfer.amount) },
-                    $inc: { money: Number(data.amount) * -1}
-                }, { new: true }); */
+        //validacion de tiempo
+        let hora = new Date()
+        let hora2 = new Date(transfer.date)
 
-        //cambiar la cantida del receiver
-        /*         await User.findOneAndUpdate({ _id: receiver._id }, {
-                    $inc: { money: Number(data.amount) }
-                }, { new: true });
-         */
+        let diff = (hora - hora2) / (1000 * 60)
+        console.log(diff);
+
+        if(diff >= 1) return res.status(400).send({ message: "No se puede modificar la transferencia :(, ya paso mas de 1 minuto" })
+
+
+        //validar que el sender tenga el dinero suficiente
+        if (sender.money < data.amount) return res.status(400).send({ message: "No tiene suficiente dinero" })
+
+        //devolver la cantidad anterior al sender
+        await User.findOneAndUpdate({ _id: sender._id }, {
+            $inc: { money: Number(transfer.amount) }
+        }, { new: true });
+        //quitar la cantidad nueva al sender
+        await User.findOneAndUpdate({ _id: sender._id }, {
+            $inc: { money: Number(data.amount) * -1 }
+        }, { new: true });
+
+        //quitar la cantidad anterior al receiver
+        await User.findOneAndUpdate({ _id: receiver._id }, {
+            $inc: { money: Number(transfer.amount) * -1 }
+        }, { new: true });
+        //agregar la cantidad nueva al receiver
+        await User.findOneAndUpdate({ _id: receiver._id }, {
+            $inc: { money: Number(data.amount) }
+        }, { new: true });
+
 
         //actualizar la transferencia
         let updateTransfer = await Transfer.findOneAndUpdate(
@@ -152,11 +173,11 @@ exports.cancel = async (req, res) => {
 
         //regresar la cantidad de dinero al emisor
         await User.findOneAndUpdate({ _id: sender._id }, {
-            $inc: { money: Number(transfer.amount) }
+            $inc: { money: Number(transfer.amount), movements: Number(1) * -1 }
         }, { new: true });
 
         await User.findOneAndUpdate({ _id: receiver._id }, {
-            $inc: { money: Number(transfer.amount) * -1 }
+            $inc: { money: Number(transfer.amount) * -1, movements: Number(1) * -1 }
         }, { new: true });
 
         //eliminar la transferencia
@@ -185,8 +206,61 @@ exports.getTransfersByUser = async (req, res) => {
         }).populate('sender', 'name').populate('receiver', 'name')
         return res.send({ message: "transferencias del usuario", transfers })
     } catch (err) {
-        console.log(err)
+        console.error(err)
     }
 }
 
-//obtener todas las transferencias que hizo a la persona
+//Transferencias para favoritos
+exports.transferFavorite = async (req, res) => {
+    try {
+        //obtener token de la persona que hara la transferencia
+        let token = req.user.sub
+        //obtener data
+        let data = {
+            date: new Date(),
+            date1: moment().format('MMMM Do YYYY, h:mm:ss a'),
+            sender: token
+        }
+
+        data.amount = req.body.amount
+
+        //obtener el id del favorito
+        let favoriteId = req.params.id
+        //buscar si existe el favorito
+        let existeFavorite = await Favorites.findOne({ _id: favoriteId })
+        if (!existeFavorite) return res.status(400).send({ message: "No existe el favorito" })
+
+        //buscar si existe el receptor
+        let receiverExiste = await User.findOne({ DPI: existeFavorite.DPI })
+        if (!receiverExiste) return res.status(400).send({ message: "No existe el usuario" })
+
+        //vertificar si tiene dinero60000
+        let sender = await User.findOne({ _id: token })
+        if (data.amount > 2000) return res.status(400).send({ message: "No puede transferir mas de 2000" })
+        else if (sender.money < data.amount) return res.status(400).send({ message: "No tiene suficiente dinero" })
+        else if (data.amount <= 0) return res.status(400).send({ message: 'No se puede transferir por debajo de 0' })
+
+        data.receiver = receiverExiste._id
+        data.noAccount = receiverExiste.noAccount
+        data.DPI = receiverExiste.DPI
+
+
+        //quitar el dinero de la persona que hace la transferencia
+        await User.findOneAndUpdate({ _id: sender._id }, {
+            $inc: { money: Number(data.amount) * -1, movements: Number(1) }
+        }, { new: true });
+
+        //agregar el dinero a la persona que recibe la transferencia
+        await User.findOneAndUpdate({ _id: receiverExiste._id }, {
+            $inc: { money: Number(data.amount), movements: Number(1) }
+        }, { new: true });
+
+        //guardar la transferencia
+        let transfer = new Transfer(data)
+        await transfer.save()
+        return res.status(200).send({ message: "Transferencia realizada con exito" })
+    } catch (err) {
+        console.error(err)
+        return res.status(400).send({ message: "Error al guardar la transferencia", err })
+    }
+}
