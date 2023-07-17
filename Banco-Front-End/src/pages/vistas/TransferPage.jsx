@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-import { Navbar } from '../../components/Navbar'
 import axios from 'axios'
-import { Link} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 
 export const TransferPage = () => {
-  const navigate = useNavigate()
+  const title = "Realizar Transferencia"
 
   const headers = {
     'Content-Type': 'application/json',
@@ -30,42 +28,62 @@ export const TransferPage = () => {
     try {
       e.preventDefault()
       const { data } = await axios.post('http://localhost:3100/transfer/save', form, { headers: headers })
-      alert(data.message)
-      navigate('/home')
+      Swal.fire({
+        title: `${data.message}`,
+        icon: "success",
+      })
     } catch (err) {
       console.log(err)
-      alert(err.response?.data.message)
+      Swal.fire({
+        title: `${err.response.data.message}`,
+        icon: "warning",
+      })
     }
   }
 
 
   return (
     <>
-      <Navbar />
-      <div>TransferPage</div>
 
-      <div className="container py-5 h-100">
-        <form>
+      <div className="modal" tabIndex="-1" id="myTransferUser">
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            {/* titulo */}
+            <div className='modal-header' style={{ backgroundColor: '#BADD7C', color: '#fff' }}>
+              <h1 className="modal-title">{title}</h1>
+            </div>
 
-          <div className="form-outline mb-4">
-            <label className="form-label">Numero De Cuenta</label>
-            <input onChange={handleChange} name='noAccount' type="number" className="form-control form-control-lg" />
+
+            <div className="modal-body">
+              <div className="container-fluid">
+                <form className="row g-3">
+                  <div className="col-md-6">
+                    <label className="form-label">Numero de Cuenta</label>
+                    <input type="number" className="form-control" name='noAccount' onChange={handleChange} />
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">DPI</label>
+                    <input type="number" className="form-control" name='DPI' onChange={handleChange} />
+                  </div>
+
+                  <div className="col-md-6">
+                    <label className="form-label">Monto</label>
+                    <input type="number" className="form-control" name='amount' onChange={handleChange} />
+                  </div>
+
+                  <div className="modal-footer">
+                    <button onClick={(e) => transfersave(e)} type="button" className="btn btn-primary">Realizar Transferencia</button>
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+
+
           </div>
-
-          <div className="form-outline mb-4">
-            <label className="form-label">DPI</label>
-            <input onChange={handleChange} name='DPI' type="number" className="form-control form-control-lg" />
-          </div>
-
-          <div className="form-outline mb-4">
-            <label className="form-label">Monto</label>
-            <input onChange={handleChange} name='amount' type="number" className="form-control form-control-lg" />
-          </div>
-
-          <button onClick={(e) => transfersave(e)} type="submit" className="btn btn-primary">Enviar</button>
-
-        </form>
-      </div>
+        </div>
+      </div >
     </>
   )
 }

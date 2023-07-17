@@ -1,20 +1,31 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { AddTransFavo } from '../adds/AddTransFavo'
+import Swal from 'sweetalert2'
 
-export const CardFavorites = ({_id, title, DPI, nickname}) => {
+export const CardFavorites = ({ _id, title, DPI, nickname }) => {
 
     const elimFav = async () => {
         try {
-            const {data} = await axios.delete(`http://localhost:3100/favorite/delete/${_id}`)
-            alert(data.message)
+            const { data } = await axios.delete(`http://localhost:3100/favorite/delete/${_id}`)
+            Swal.fire({
+                title: `${data.message}`,
+                icon: "success",
+            })
+            /* alert(data.message) */
         } catch (err) {
             console.log(err)
+            Swal.fire({
+                title: `${err.response.data.message}`,
+                icon: "warning",
+            })
         }
     }
 
 
     return (
         <>
+            <AddTransFavo _id={_id} />
             <div className="container py-5 h-100">
                 <div className="row d-flex justify-content-center align-items-center h-100">
                     <div className="col col-md-9 col-lg-7 col-xl-5">
@@ -29,13 +40,10 @@ export const CardFavorites = ({_id, title, DPI, nickname}) => {
                                     <div className="flex-grow-1 ms-3">
                                         <h5 className="mb-1">{nickname}</h5>
                                         <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>{title}</p>
-{/*                                         <div className="d-flex justify-content-start rounded-3 p-2 mb-2"
-                                            style={{ backgroundColor: "#efefef" }}>
-                                            
-                                        </div> */}
+
                                         <div className="d-flex pt-1">
-                                            <button type="button" className="btn btn-outline-success me-1 flex-grow-1">Depositar</button>
-                                            <button type="button" className="btn btn-danger flex-grow-1">Eliminar</button>
+                                            <button type="button" className="btn btn-outline-success me-1 flex-grow-1" data-bs-toggle="modal" data-bs-target="#myModalTransfer">Depositar</button>
+                                            <button type="button" className="btn btn-danger flex-grow-1" onClick={() => elimFav(_id)}>Eliminar</button>
                                         </div>
                                     </div>
                                 </div>

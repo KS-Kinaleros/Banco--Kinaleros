@@ -24,9 +24,12 @@ export const UserPage = () => {
     <>
       <AddUser />
       <main>
-        <div className="left binding color">
+        <div className="left binding color" style={{ display: 'flex', alignItems: 'center' }}>
           Usuarios
+          <button className='btn btn-success align-text-bottom btn-ver' style={{ marginLeft: 'auto' }}>Mas Movimientos</button>
         </div>
+
+
         <div className='row g-0 justify-content-center'>
           {
             user.map(({ _id, noAccount, DPI, name, surname, email, money }, i) => {

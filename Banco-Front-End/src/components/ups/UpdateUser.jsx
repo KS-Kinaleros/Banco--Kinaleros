@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 
-export const UpdateUser = ({_id}) => {
+export const UpdateUser = ({ _id }) => {
     const title = "Editar Usuario"
 
     const [form, setForm] = useState({
@@ -23,9 +24,17 @@ export const UpdateUser = ({_id}) => {
     const updateUser = async () => {
         try {
             const { data } = await axios.put(`http://localhost:3100/user/update/${_id}`, form)
-            alert(data.message)
+            Swal.fire({
+                title: `${data.message}`,
+                icon: "success",
+            })
+            /* alert(data.message) */
         } catch (err) {
             console.log(err)
+            Swal.fire({
+                title: `${err.response.data.message}`,
+                icon: "warning",
+            })
         }
     }
 

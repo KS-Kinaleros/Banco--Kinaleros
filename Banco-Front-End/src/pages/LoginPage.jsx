@@ -27,8 +27,7 @@ export const LoginPage = () => {
             console.log(data.user)
 
             Swal.fire({
-                title: "Log in",
-                text: `${data.message}`,
+                title: `${data.message}`,
                 icon: "success",
             });
 
@@ -49,8 +48,7 @@ export const LoginPage = () => {
         } catch (err) {
             console.error(err)
             Swal.fire({
-                title: "Error, Invalid Credentials",
-                text: `${err.response.data.message}`,
+                title: `${err.response.data.message}`,
                 icon: "warning",
             });
             /* alert(err.response?.data.message) */

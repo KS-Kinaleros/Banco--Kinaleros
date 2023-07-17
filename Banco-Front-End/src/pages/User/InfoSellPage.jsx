@@ -32,6 +32,7 @@ export const InfoSellPage = () => {
             <th>Comprador</th>
             <th>Producto</th>
             <th>Costo</th>
+            <th>Acciones</th>
             {/* Otros encabezados de columna */}
           </tr>
         </thead>
@@ -46,7 +47,9 @@ export const InfoSellPage = () => {
                   <td>Q{total}.00</td>
 
                   {/* para cancelar la transferencia */}
-                  {/* <td> <button onClick={() => elimRe(_id)} classNameName='btn btn-danger'>Cancerlar</button></td> */}
+                  <td>
+                    <button className='btn btn-danger'>Cancelar</button>
+                  </td>
                 </tr>
               )
             })

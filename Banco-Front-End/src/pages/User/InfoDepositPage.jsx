@@ -43,10 +43,7 @@ export const InfoDepositPage = () => {
                   <td>{date1}</td>
                   <td>{noAccount}</td>
                   <td>{nameAccount}</td>
-                  <td>{amount}</td>
-
-                  {/* para cancelar la transferencia */}
-                  {/* <td> <button onClick={() => elimRe(_id)} classNameName='btn btn-danger'>Cancerlar</button></td> */}
+                  <td>Q{amount}.00</td>
                 </tr>
               )
             })

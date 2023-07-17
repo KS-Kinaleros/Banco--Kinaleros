@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 
 export const AddUser = () => {
   const title = "Agregar Usuario"
@@ -29,9 +30,17 @@ export const AddUser = () => {
     try {
       e.preventDefault()
       const { data } = await axios.post('http://localhost:3100/user/add', form)
-      alert(data.message)
+      Swal.fire({
+        title: `${data.message}`,
+        icon: "success",
+      })
+      /* alert(data.message) */
     } catch (err) {
       console.log(err)
+      Swal.fire({
+        title: `${err.response.data.message}`,
+        icon: "warning",
+      })
     }
   }
 

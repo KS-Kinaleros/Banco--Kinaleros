@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React from 'react'
+import Swal from 'sweetalert2'
 
 export const CardProductUser = ({ _id, name, description, price }) => {
 
@@ -10,11 +11,19 @@ export const CardProductUser = ({ _id, name, description, price }) => {
 
     const buyProduct = async (/* _id */) => {
         try {
-            const { data } = await axios.post(`http://localhost:3100/buy/saveBuy/${_id}`,{}, { headers: headers })
-            alert(data.message)
+            const { data } = await axios.post(`http://localhost:3100/buy/saveBuy/${_id}`, {}, { headers: headers })
+            Swal.fire({
+                title: `${data.message}`,
+                icon: "success",
+            })
+            /* alert(data.message) */
         } catch (err) {
             console.log(err)
-            alert(err?.response.data.message)
+            Swal.fire({
+                title: `${err.response.data.message}`,
+                icon: "warning",
+            })
+            /* alert(err?.response.data.message) */
         }
     }
 

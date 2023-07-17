@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 
 export const AddDeposit = () => {
     const title = 'Realizar Deposito'
@@ -27,10 +28,17 @@ export const AddDeposit = () => {
         try {
             e.preventDefault()
             const { data } = await axios.post('http://localhost:3100/deposit/save', form, {headers: headers})
-            alert(data.message)
+            Swal.fire({
+                title: `${data.message}`,
+                icon: "success",
+            })
         } catch (err) {
             console.log(err)
-            alert(err?.response.data.message)
+            Swal.fire({
+                title: `${err.response.data.message}`,
+                icon: "warning",
+            })
+            /* alert(err?.response.data.message) */
         }
     }
 
@@ -75,7 +83,7 @@ export const AddDeposit = () => {
 
                     </div>
                 </div>
-            </div >
+            </div>
         </>
     )
 }

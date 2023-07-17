@@ -1,9 +1,9 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
-export const AddFavorite = () => {
-    const title = 'Agregar Favoritos'
+export const AddTransFavo = ({ _id }) => {
+    const title = "Transferencia"
 
     const headers = {
         'Content-Type': 'application/json',
@@ -11,9 +11,7 @@ export const AddFavorite = () => {
     }
 
     const [form, setForm] = useState({
-        noAccount: '',
-        DPI: '',
-        nickname: ''
+        amount: '',
     })
 
     const handleChange = (e) => {
@@ -21,13 +19,12 @@ export const AddFavorite = () => {
             ...form,
             [e.target.name]: e.target.value
         })
-
     }
 
-    const saveFavorite = async (e) => {
+    const saveTransfer = async (e) => {
         try {
             e.preventDefault()
-            const { data } = await axios.post('http://localhost:3100/favorite/save', form, { headers: headers })
+            const { data } = await axios.post(`http://localhost:3100/transfer/transferFavorite/${_id}`, form, { headers: headers })
             Swal.fire({
                 title: `${data.message}`,
                 icon: "success",
@@ -39,13 +36,14 @@ export const AddFavorite = () => {
                 title: `${err.response.data.message}`,
                 icon: "warning",
             })
+            /* alert(err?.response.data.message) */
         }
     }
 
 
     return (
         <>
-            <div className="modal" tabIndex="-1" id="myModal">
+            <div className="modal" tabIndex="-1" id="myModalTransfer">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         {/* titulo */}
@@ -57,23 +55,13 @@ export const AddFavorite = () => {
                         <div className="modal-body">
                             <div className="container-fluid">
                                 <form className="row g-3">
-                                    <div className="col-md-6">
-                                        <label className="form-label">DPI</label>
-                                        <input type="text" className="form-control" name='DPI' onChange={handleChange} />
+                                    <div className=".col-md-3">
+                                        <label /* name='amount' */ className="form-label" style={{ fontSize: '27px' }} >Monto a transferir</label>
+                                        <input type="number" className="form-control" name='amount' onChange={handleChange} />
                                     </div>
-                                    <div className="col-md-6">
-                                        <label className="form-label">Numero de Cuenta</label>
-                                        <input type="text" className="form-control" name='noAccount' onChange={handleChange} />
-                                    </div>
-
-                                    <div className="col-md-6">
-                                        <label className="form-label">Apodo</label>
-                                        <input type="text" className="form-control" name='nickname' onChange={handleChange} />
-                                    </div>
-
 
                                     <div className="modal-footer">
-                                        <button onClick={(e) => saveFavorite(e)} type="button" className="btn btn-primary">Guardar Favorito</button>
+                                        <button onClick={(e) => saveTransfer(e)} type="button" className="btn btn-primary">Realizar Deposito</button>
                                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                     </div>
 
@@ -85,8 +73,6 @@ export const AddFavorite = () => {
                     </div>
                 </div>
             </div >
-
         </>
     )
 }
-

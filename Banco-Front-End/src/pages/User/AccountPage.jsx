@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Navbar } from '../../components/Navbar'
 import axios from 'axios'
 import { Outlet, Link } from 'react-router-dom'
+import { UpdateAccount } from '../../components/ups/UpdateAccount'
 
 export const AccountPage = () => {
     const [user, setUser] = useState([{}])
@@ -28,6 +29,8 @@ export const AccountPage = () => {
     return (
         <>
             <Navbar />
+            <UpdateAccount/>
+
 
             <section className="vh-200" style={{ backgroundColor: '#eee' }}>
                 <div className="container py-5 h-100">
@@ -41,11 +44,10 @@ export const AccountPage = () => {
 
                                     {/* nombres */}
                                     <h4 className="mb-2">Nombre: {user.name}</h4>
-                                    <h4 className="mb-2">Surname: {user.username}</h4>
-                                    <h4 className="mb-2">Emaill: {user.email}</h4>
-                                    <h4 className="mb-2">Phone:{user.phone}</h4>
-
-
+                                    <h4 className="mb-2">Usuario: {user.username}</h4>
+                                    <h4 className="mb-2">Coreo: {user.email}</h4>
+                                    <h4 className="mb-2">Teléfono :{user.phone}</h4>
+                                    <button className='btn btn-warning' data-bs-toggle="modal" data-bs-target="#myUpdateUser">Editar</button>
 
                                 </div>
                             </div>

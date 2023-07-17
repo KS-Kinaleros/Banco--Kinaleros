@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 
 export const AddProduct = () => {
     const title = "Agregar Productos"
@@ -22,9 +23,17 @@ export const AddProduct = () => {
     const saveProduct = async () => {
         try {
             const { data } = await axios.post('http://localhost:3100/product/add', form)
-            alert(data.message)
+            Swal.fire({
+                title: `${data.message}`,
+                icon: "success",
+            })
+            /*  alert(data.message) */
         } catch (err) {
             console.log(err)
+            Swal.fire({
+                title: `${err.response.data.message}`,
+                icon: "warning",
+            })
         }
     }
 

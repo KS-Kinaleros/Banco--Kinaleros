@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 
 export const UpdateDeposit = ({ _id }) => {
   const title = "Editar Deposito"
@@ -18,36 +19,43 @@ export const UpdateDeposit = ({ _id }) => {
   const updateDeposit = async () => {
     try {
       const { data } = await axios.put(`http://localhost:3100/deposit/update/${_id}`, form)
-      alert(data.message)
+      Swal.fire({
+        title: `${data.message}`,
+        icon: "success",
+      })
+      /* alert(data.message) */
     } catch (err) {
       console.log(err)
+      Swal.fire({
+        title: `${err.response.data.message}`,
+        icon: "warning",
+      })
     }
   }
 
   return (
     <>
       <div className="modal" tabIndex="-1" id="myDeposit">
-        <div className="modal-dialog">
+        <div className="modal-dialog ">
           <div className="modal-content">
             {/* titulo */}
-            <div className='modal-header' style={{ backgroundColor: '#BADD7C', color: '#fff' }}>
+            <div className='modal-header' style={{backgroundColor: '#BADD7C', color: '#fff'}}>
               <h1 className="modal-title">{title}</h1>
             </div>
 
             {/* formulario */}
-            <div className="modal-dialog modal-sm">
+            <div className='modal-body'>
               <div className="mb-3">
                 <label htmlFor="" className="form-label">Monto</label>
                 <input onChange={handleChange} name='amount' type="number" className="form-control" required />
               </div>
+            
+              {/* botones para cancelar o agregar */}
+              <div className='modal-footer'>
+                <button onClick={() => updateDeposit()} type="submit" className="btn btn-primary">Actualizar Deposito</button>
+                <button type="submit" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+              </div>
             </div>
-
-
-            <div className="modal-footer">
-              <button onClick={() => updateDeposit()} type="button" className="btn btn-primary">Actualizar Depoisito</button>
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-
           </div>
         </div>
       </div>

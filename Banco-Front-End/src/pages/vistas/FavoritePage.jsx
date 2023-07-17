@@ -29,28 +29,39 @@ export const FavoritePage = () => {
   return (
     <>
       <Navbar />
-      <AddFavorite/>
+      <AddFavorite />
       <main>
-        <div className="left binding color" style={{color: '#fff'}}>
+        <div className="left binding color" style={{ color: '#fff' }}>
           Favoritos
         </div>
-        <div className='row g-0 justify-content-center'>
-          {
-            favorites.map(({ _id, noAccount, DPI, nickname }, i) => {
-              return (
-                <CardFavorites
-                  key={i}
-                  _id={_id}
-                  title={noAccount}
-                  DPI={DPI}
-                  nickname={nickname}
-                ></CardFavorites>
-              )
-            })
-          }
-        </div>
+
+
+
+
+        {favorites.length === 0 ? (
+          <div className="row g-0 justify-content-center">
+            <div className="col-12 text-center mt-5">
+              <h1>Agregamos a nuevos amigos</h1>
+            </div>
+          </div>
+        ) : (
+          <div className="row g-0 justify-content-center">
+            {favorites.map(({ _id, noAccount, DPI, nickname }, i) => (
+              <CardFavorites
+                key={_id}
+                _id={_id}
+                title={noAccount}
+                DPI={DPI}
+                nickname={nickname}
+              />
+            ))}
+          </div>
+        )}
+
         <button className='btn btn-info floating-button' data-bs-toggle="modal" data-bs-target="#myModal">Agregar Favorito</button>
       </main>
+
+
     </>
   )
 }

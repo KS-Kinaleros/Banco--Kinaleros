@@ -22,28 +22,32 @@ export const ProductUser = () => {
 
   return (
     <>
-         <Navbar />
+      <Navbar />
 
       <main>
         <div className="left binding color">
           Productos
         </div>
-        <div className='row g-0 justify-content-center'>
-          {
-            product.map(({ _id, name, description, price, availability }, i) => {
-              return (
-                <CardProductUser
-                  key={i}
-                  _id={_id}
-                  name={name}
-                  description={description}
-                  price={price}
-                  availability={availability}
-                ></CardProductUser>
-              )
-            })
-          }
-        </div>
+        {product.length === 0 ? (
+          <div className="row g-0 justify-content-center">
+            <div className="col-12 text-center mt-5">
+              <h3>No hay productos actualmente</h3>
+            </div>
+          </div>
+        ) : (
+          <div className='row g-0 justify-content-center'>
+            {product.map(({ _id, name, description, price, availability }, i) => (
+              <CardProductUser
+                key={_id}
+                _id={_id}
+                name={name}
+                description={description}
+                price={price}
+                availability={availability}
+              />
+            ))}
+          </div>
+        )}
       </main>
     </>
   )
