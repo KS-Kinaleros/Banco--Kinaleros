@@ -38,9 +38,9 @@ exports.saveAdmin = async (req, res) => {
         //obtener token
         let token = req.user.sub
         //buscar el usuario
-        let userAdmin = await User.findOne({_id: token})
+        let userAdmin = await User.findOne({ _id: token })
         //validar que si sea admin
-        if(userAdmin.role !== "ADMIN") return res.status(400).send({message: "No tienes permisos para crear un administrador"})
+        if (userAdmin.role !== "ADMIN") return res.status(400).send({ message: "No tienes permisos para crear un administrador" })
 
         //obtener data
         let data = req.body;
@@ -232,6 +232,28 @@ exports.getLastMoves = async (req, res) => {
 
         return res.send({ message: 'Ultimos movimientos', latestData })
 
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+exports.getUserUpwardMovements = async (req, res) => {
+    try {
+        //obtener a los usuarios con mas movimientos de forma  ascendente
+        const usersUpw = await User.find({role: 'CLIENT'}).sort({ movements: -1 })
+        return res.send({ message: 'usuarios', usersUpw })
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+
+
+exports.getUserDescendingMovements = async (req, res) => {
+    try {
+        //obtener a los usuarios con mas movimientos de forma descendente
+        const usersDes = await User.find({role: 'CLIENT'}).sort({ movements: 1 })
+        return res.send({ message: 'usuarios', usersDes })
     } catch (err) {
         console.error(err)
     }

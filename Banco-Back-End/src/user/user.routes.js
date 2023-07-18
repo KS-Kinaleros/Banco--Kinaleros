@@ -16,5 +16,7 @@ api.get('/get', userController.getUsers)
 api.get('/getToken', ensureAuth, userController.getUserToken)
 api.get('/getMovents', userController.getUsersMovements)
 api.get('/getLastMoves/:id', userController.getLastMoves)
+api.get('/getUpward', userController.getUserUpwardMovements)
+api.get('/getDescending', userController.getUserDescendingMovements)
 
 module.exports = api

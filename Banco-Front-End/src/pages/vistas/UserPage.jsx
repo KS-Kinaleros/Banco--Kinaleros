@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { CardUser } from '../../components/cards/CardUser'
 import { AddUser } from '../../components/adds/AddUser'
 import { AddAdmin } from '../../components/adds/AddAdmin'
+import { UpwardMoves } from '../../components/Movements/UpwardMoves'
+import { DescendingMoves } from '../../components/Movements/DescendingMoves'
 
 export const UserPage = () => {
   const [user, setUser] = useState([{}])
@@ -26,11 +28,14 @@ export const UserPage = () => {
     <>
       <AddUser />
       <AddAdmin />
+      <UpwardMoves />
+      <DescendingMoves />
+      
       <main>
         <div className="left binding color" style={{ display: 'flex', alignItems: 'center' }}>
           Usuarios
-          <button className='btn btn-primary align-text-bottom btn-ver' style={{ marginLeft: 'auto' }}> asc </button>
-          <button className='btn btn-primary align-text-bottom btn-ver mx-2'> des </button>
+          <button className='btn btn-primary align-text-bottom btn-ver' data-bs-toggle="modal" data-bs-target="#myMovesUpward" style={{ marginLeft: 'auto' }}> asc </button>
+          <button className='btn btn-primary align-text-bottom btn-ver mx-2' data-bs-toggle="modal" data-bs-target="#myMovesDescending"> des </button>
           <button className='btn btn-success align-text-bottom btn-adm' data-bs-toggle="modal" data-bs-target="#mySaveAdmin">Agregar Admin</button>
         </div>
 
