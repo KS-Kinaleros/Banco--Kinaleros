@@ -56,7 +56,7 @@ exports.delete = async (req, res) => {
 
 exports.get = async (req, res)=>{
     try {
-        let products = await Product.find()
+        let products = await Product.find({ availability: 'disponible'})
         return res.status(200).send({message:"productos encontrados", products})
     } catch (err) {
         console.error(err)

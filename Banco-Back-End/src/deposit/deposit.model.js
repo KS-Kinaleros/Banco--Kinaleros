@@ -21,7 +21,7 @@ const DepositSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    amount:{
+    amounts:{
         type: Number,
         required: true
     }

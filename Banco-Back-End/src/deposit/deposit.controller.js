@@ -20,7 +20,7 @@ exports.save = async (req, res) => {
             worker: token,
             noAccount: req.body.noAccount,
             nameAccount: req.body.nameAccount,
-            amount: req.body.amount
+            amounts: req.body.amounts
         }
         //verificar si la cuenta existe validando el numero de cuenta y el nombre del usuario
         let userexist = await User.findOne({ noAccount: data.noAccount })
@@ -33,7 +33,7 @@ exports.save = async (req, res) => {
 
         //agregar la cantidad de dinero a la cuenta
         await User.findOneAndUpdate({ _id: userexist._id }, {
-            $inc: { money: Number(data.amount), movements: Number(1) }
+            $inc: { money: Number(data.amounts), movements: Number(1) }
         }, { new: true })
 
 
@@ -62,12 +62,12 @@ exports.update = async (req, res) => {
 
         //quitar el dinero
         await User.findOneAndUpdate({ _id: user._id }, {
-            $inc: { money: Number(depositExist.amount) * -1}
+            $inc: { money: Number(depositExist.amounts) * -1}
         }, { new: true });
 
         //agregar la nueva cantidad
         await User.findOneAndUpdate({ _id: user._id }, {
-            $inc: { money: Number(data.amount)}
+            $inc: { money: Number(data.amounts)}
         }, { new: true });
 
         //actualizar el deposito
@@ -106,7 +106,7 @@ exports.cancel = async (req, res) => {
         if (!user) return res.status(404).send({ message: 'Usuario no encontrado' })
 
         await User.findOneAndUpdate({ _id: user._id }, {
-            $inc: { money: Number(depositExist.amount) * -1, movements: Number(1) * -1 }
+            $inc: { money: Number(depositExist.amounts) * -1, movements: Number(1) * -1 }
         }, { new: true })
 
         //eliminar el deposito
