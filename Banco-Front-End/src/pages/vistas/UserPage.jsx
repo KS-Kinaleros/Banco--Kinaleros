@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { CardUser } from '../../components/cards/CardUser'
 import { AddUser } from '../../components/adds/AddUser'
+import { AddAdmin } from '../../components/adds/AddAdmin'
 
 export const UserPage = () => {
   const [user, setUser] = useState([{}])
@@ -18,21 +19,25 @@ export const UserPage = () => {
     }
   }
 
+
   useEffect(() => { getUser() }, [])
 
   return (
     <>
       <AddUser />
+      <AddAdmin />
       <main>
         <div className="left binding color" style={{ display: 'flex', alignItems: 'center' }}>
           Usuarios
-          <button className='btn btn-success align-text-bottom btn-ver' style={{ marginLeft: 'auto' }}>Mas Movimientos</button>
+          <button className='btn btn-primary align-text-bottom btn-ver' style={{ marginLeft: 'auto' }}> asc </button>
+          <button className='btn btn-primary align-text-bottom btn-ver mx-2'> des </button>
+          <button className='btn btn-success align-text-bottom btn-adm' data-bs-toggle="modal" data-bs-target="#mySaveAdmin">Agregar Admin</button>
         </div>
 
 
         <div className='row g-0 justify-content-center'>
           {
-            user.map(({ _id, noAccount, DPI, name, surname, email, money }, i) => {
+            user.map(({ _id, noAccount, DPI, name, surname, email, money, movements, role }, i) => {
               return (
                 <CardUser
                   key={i}
@@ -40,9 +45,11 @@ export const UserPage = () => {
                   title={name}
                   surname={surname}
                   DPI={DPI}
-                  description={noAccount}
+                  noAccount={noAccount}
                   email={email}
                   money={money}
+                  movements={movements}
+                  role={role}
                 ></CardUser>
               )
             })

@@ -13,7 +13,7 @@ export const AddDeposit = () => {
     const [form, setForm] = useState({
         noAccount: '',
         nameAccount: '',
-        amount: '',
+        amounts: '',
     })
 
     const handleChange = (e) => {
@@ -68,7 +68,7 @@ export const AddDeposit = () => {
 
                                     <div className="col-md-6">
                                         <label className="form-label">Monto</label>
-                                        <input type="number" className="form-control" name='amount' onChange={handleChange} />
+                                        <input type="number" className="form-control" name='amounts' onChange={handleChange} />
                                     </div> 
 
                                     <div className="modal-footer">

@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 
 export const CardFavorites = ({ _id, title, DPI, nickname }) => {
 
-    const elimFav = async () => {
+    const elim = async () => {
         try {
             const { data } = await axios.delete(`http://localhost:3100/favorite/delete/${_id}`)
             Swal.fire({
@@ -21,6 +21,31 @@ export const CardFavorites = ({ _id, title, DPI, nickname }) => {
             })
         }
     }
+
+    const elimFav = async () => {
+        try {
+            Swal.fire({
+                title: 'Estas seguro de eliminar al favorito?',
+                text: "No se podra revertir!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Eliminar!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    elim()
+                }
+            })
+        } catch (err) {
+            console.log(err)
+            Swal.fire({
+                title: `${err.response.data.message}`,
+                icon: "warning",
+            })
+        }
+    }
+
 
 
     return (

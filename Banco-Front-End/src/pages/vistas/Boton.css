@@ -18,8 +18,13 @@
 }
 
 .btn-ver {
-  width: 120px;
-  height: 60px;
+  width: 90px;
+  height: 40px;
+}
+
+.btn-adm{
+  width: 140px;
+  height: 40px;
 }
 
 .btn-cerrar {

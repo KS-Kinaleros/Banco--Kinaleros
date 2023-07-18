@@ -37,13 +37,13 @@ export const InfoDepositPage = () => {
         </thead>
         <tbody>
           {
-            deposits?.map(({ _id, date1, noAccount, nameAccount, amount }, i) => {
+            deposits?.map(({ _id, date1, noAccount, nameAccount, amounts }, i) => {
               return (
                 <tr key={i}>
                   <td>{date1}</td>
                   <td>{noAccount}</td>
                   <td>{nameAccount}</td>
-                  <td>Q{amount}.00</td>
+                  <td>Q{amounts}.00</td>
                 </tr>
               )
             })

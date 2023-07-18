@@ -3,7 +3,7 @@ import React from 'react'
 import { UpdateDeposit } from '../ups/UpdateDeposit'
 import Swal from 'sweetalert2'
 
-export const CardDeposit = ({ _id, title, date, noAccount, amount }) => {
+export const CardDeposit = ({ _id, title, date, noAccount, amounts }) => {
 
     const cancelDeposit = async () => {
         try {
@@ -30,7 +30,7 @@ export const CardDeposit = ({ _id, title, date, noAccount, amount }) => {
                     <h5 className='card-title'>{title}</h5>
                     <p className='card-text'>{noAccount}</p>
                     <p className='card-text'>{date}</p>
-                    <p className='card-text' style={{ color: '#BADD7C' }}>{amount}</p>
+                    <p className='card-text' style={{ color: '#BADD7C' }}>{amounts}</p>
 
                     <button className='btn btn-warning btn-common me-2' data-bs-toggle="modal" data-bs-target="#myDeposit">Editar</button>
                     <button className='btn btn-danger btn-common' onClick={() => cancelDeposit(_id)}>Cancelar</button>
